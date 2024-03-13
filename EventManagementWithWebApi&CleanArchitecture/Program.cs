@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Infra.Data.Identity.Seeds;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,9 +18,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EventlyDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("Evently"),
     builder => builder.MigrationsAssembly("Infra.Data")));
-/*builder.Services.AddDbContext<IdentityDbContext>(
+
+/*builder.Services.AddDbContext<AppIdentityDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));*/
-builder.Services.AddIdentity<User, IdentityRole>()
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.SignIn.RequireConfirmedEmail = true;
+})
+
     .AddEntityFrameworkStores<EventlyDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
@@ -37,11 +47,11 @@ using (IServiceScope? scope = app.Services.CreateScope())
     var loggerFactory = service.GetRequiredService<ILoggerFactory>();
     try
     {
-        var context = service.GetRequiredService<EventlyDbContext> ();
+        var context = service.GetRequiredService<AppIdentityDbContext>();
         var userManager = service.GetRequiredService<UserManager<User>>();
         var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-       // await DefaultRoles.SeedRoles(roleManager);
-       // await DefaultUsers.SeedUsers(userManager);
+        await DefaultRoles.SeedRoles(roleManager);
+        //await DefaultUsers.SeedUsers(userManager);
     }
     catch (Exception ex)
     {

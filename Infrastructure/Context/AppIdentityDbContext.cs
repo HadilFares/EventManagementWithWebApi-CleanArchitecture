@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Infra.Data.Context
 {
-    public class IdentityDbContext: IdentityDbContext<User>
+    public class AppIdentityDbContext : IdentityDbContext<User>
     {
-      /*  public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
-        : base(options)
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
-        }*/
+        }
+
     }
 }

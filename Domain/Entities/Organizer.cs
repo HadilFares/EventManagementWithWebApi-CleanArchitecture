@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Organizer : User
+ /*   public class Organizer 
     {
       
         public double ChiffreAffaires { get; set; }
 
        
-    }
+    }*/
 }

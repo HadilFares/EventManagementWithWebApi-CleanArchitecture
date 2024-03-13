@@ -4,16 +4,19 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infra.Data.Migrations
+namespace Infra.Data.Migrations.EventlyDb
 {
     [DbContext(typeof(EventlyDbContext))]
-    partial class EventlyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240313225342_FirstMigration")]
+    partial class FirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace Infra.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Account");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -117,9 +120,7 @@ namespace Infra.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
-
-                    b.UseTptMappingStrategy();
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -255,16 +256,6 @@ namespace Infra.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Organizer", b =>
-                {
-                    b.HasBaseType("Domain.Entities.User");
-
-                    b.Property<double>("ChiffreAffaires")
-                        .HasColumnType("float");
-
-                    b.ToTable("Organizers", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -323,15 +314,6 @@ namespace Infra.Data.Migrations
                     b.HasOne("Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Organizer", b =>
-                {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.Organizer", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
