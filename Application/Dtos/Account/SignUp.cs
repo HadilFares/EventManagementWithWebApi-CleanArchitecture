@@ -10,7 +10,7 @@ namespace Application.Dtos.Account
    public class SignUp
     {
         [Required]
-        [StringLength(100)]
+      
         public string FirstName { get; set; }
 
         [Required]

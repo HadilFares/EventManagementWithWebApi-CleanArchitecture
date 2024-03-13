@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6zE+qqzvneZ4rK+gGYfS3EGWTE+ObwEFjjz1XKq4urm562GE6aoMAV8czrOtkoiBcjv87XLinyLt6ypbBymkzw==",
+  "dgSpecHash": "DiKH3Pe3nOl7A5GCgnXrc3zOGHDRyXGGJlWRJVKHrMrwr50GDjbubKE/pocxeNP65r9bj16RMfC0hpltKRFbhg==",
   "success": true,
-  "projectFilePath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

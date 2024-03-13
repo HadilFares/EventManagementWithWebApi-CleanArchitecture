@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj": {}
+    "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj": {}
   },
   "projects": {
-    "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj": {
+    "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Application\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,14 +59,14 @@
         }
       }
     },
-    "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj": {
+    "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -144,14 +144,14 @@
         }
       }
     },
-    "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj": {
+    "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj",
         "projectName": "Infra.Data",
-        "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj",
+        "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -168,11 +168,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj": {
-                "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj"
+              "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Application\\Application.csproj"
               },
-              "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj"
+              "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj"
               }
             }
           }

@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\Application",
+    "\\Application\\Dtos",
+    "\\Application\\Dtos\\Account",
+    "\\Domain\\Entities",
+    "\\EventManagementWithWebApi\u0026CleanArchitecture",
+    "\\Infrastructure\\Context",
+    "\\Infrastructure\\Services"
+  ],
+  "PreviewInSolutionExplorer": false
+}

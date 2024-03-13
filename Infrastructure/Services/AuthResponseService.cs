@@ -24,15 +24,11 @@ namespace Infra.Data.Services
         public async Task<AuthResponse> SignUpAsync(SignUp model, string origin)
         {
             var auth = new AuthResponse();
-
-            // Validate the model
             if (model == null)
             {
                 auth.Message = "Invalid sign-up data.";
                 return auth;
             }
-
-            // Create a new User instance
             var user = new User
             {
                 UserName = model.Username,
@@ -41,27 +37,39 @@ namespace Infra.Data.Services
                 LastName = model.LastName
             };
 
-            // Attempt to create the user in the database
             var result = await _userManager.CreateAsync(user, model.Password);
-            
-                if (result.Succeeded)
+
+            if (result.Succeeded)
             {
-                // Create a new Organizer instance
+                var usertest = await _userManager.FindByNameAsync(user.UserName);
                 var organizer = new Organizer
                 {
-                    Id = user.Id, // Assign the UserId to the Organizer
-                    ChiffreAffaires = 0            // Add additional properties as needed
+                  // Id = usertest.Id,
+                ChiffreAffaires = 1000            
                 };
 
-                // Add the Organizer to the context and save changes
-                _context.Organizers.Add(organizer);
-                await _context.SaveChangesAsync();
+                try
+                {
+                
+                   /* var existingUser = await _context.Users.FindAsync(user.Id);
+                    if (existingUser != null)
+                    {
+                        _context.Entry(existingUser).State = EntityState.Detached;
+                    }*/
 
-                // Optionally, send a verification email
-                // var verificationUri = await SendVerificationEmail(organizer, origin);
-                // Handle sending verification email here
+                    _context.Organizers.Add(organizer);
+                    await _context.SaveChangesAsync();
+                 
 
-                auth.Message = "SignUp Succeeded";
+
+
+                    auth.Message = "SignUp Succeeded";
+                }
+                catch (Exception ex)
+                {
+                  
+                    auth.Message = $"Error occurred during sign-up: {ex.Message}";
+                }
             }
             else
             {
@@ -75,37 +83,6 @@ namespace Infra.Data.Services
 
 
 
-        /* public async  Task<AuthResponse> SignUpAsync(SignUp model, string orgin)
-         {
-             var auth = new AuthResponse();
 
-             // Create a new Organizer instance
-             var organizer = new Organizer
-             {
-                 UserName = model.Username,
-                 Email = model.Email,
-
-             };
-
-             // Attempt to create the user in the database
-             var result = await _userManager.CreateAsync(organizer,model.Password);
-
-             //check result
-             if (!result.Succeeded)
-             {
-                 var errors = string.Empty;
-                 foreach (var error in result.Errors)
-                 {
-                     errors += $"{error.Description}, ";
-                 }
-
-                 return new AuthResponse { Message = errors };
-             }
-             else
-             {
-                 auth.Message = "SignUp Succeeded";
-             }
-             return auth;
-         }*/
     }
 }

@@ -11,9 +11,9 @@ namespace Infra.Data.Context
 {
     public class IdentityDbContext: IdentityDbContext<User>
     {
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+      /*  public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
         : base(options)
         {
-        }
+        }*/
     }
 }

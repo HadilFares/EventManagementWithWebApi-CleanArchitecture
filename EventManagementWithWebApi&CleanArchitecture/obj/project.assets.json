@@ -4492,11 +4492,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture.csproj",
       "projectName": "EventManagementWithWebApi&CleanArchitecture",
-      "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture.csproj",
+      "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\obj\\",
+      "outputPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4513,8 +4513,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj": {
-              "projectPath": "D:\\CleanArchitecture\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj"
+            "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Infrastructure\\Infra.Data.csproj"
             }
           }
         }

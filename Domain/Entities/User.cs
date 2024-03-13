@@ -6,12 +6,12 @@ namespace Domain.Entities
 {
     public class User :IdentityUser
     {
-        [Key]
-        public override string Id { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string FirstName { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
-        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
         public virtual  Account account { get; set; }
        

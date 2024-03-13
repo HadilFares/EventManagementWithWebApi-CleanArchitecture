@@ -17,8 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EventlyDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("Evently"),
     builder => builder.MigrationsAssembly("Infra.Data")));
-builder.Services.AddDbContext<IdentityDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+/*builder.Services.AddDbContext<IdentityDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));*/
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<EventlyDbContext>()
     .AddDefaultTokenProviders();
@@ -29,6 +29,27 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+
+using (IServiceScope? scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+    var loggerFactory = service.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var context = service.GetRequiredService<EventlyDbContext> ();
+        var userManager = service.GetRequiredService<UserManager<User>>();
+        var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+       // await DefaultRoles.SeedRoles(roleManager);
+       // await DefaultUsers.SeedUsers(userManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
