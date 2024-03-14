@@ -197,3 +197,16 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.genruntimeconfig.cache
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\ref\EventManagementWithWebApi&CleanArchitecture.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\MailKit.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\MailKit.NET.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\MailkitTools.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\MimeKit.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\System.Formats.Asn1.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\System.Management.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.0\System.Management.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll

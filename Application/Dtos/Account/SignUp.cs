@@ -28,5 +28,7 @@ namespace Application.Dtos.Account
         [Required]
         [StringLength(256)]
         public string Password { get; set; }
+        [Required]
+        public string Role { get; set; }
     }
 }

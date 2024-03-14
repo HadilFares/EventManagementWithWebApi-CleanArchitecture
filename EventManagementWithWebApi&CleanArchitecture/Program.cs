@@ -1,12 +1,15 @@
 using Application.Interfaces.Authentification;
 using Infra.Data.Context;
 using Infrastructure.Context;
-using Infra.Data.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Infra.Data.Identity.Seeds;
+using Infra.Data.Identity.Services;
+using Application.Interfaces.Email;
+using Domain.Settings;
+using Infra.Data.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,11 +31,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.SignIn.RequireConfirmedEmail = true;
-})
-
-    .AddEntityFrameworkStores<EventlyDbContext>()
+})  .AddEntityFrameworkStores<EventlyDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -47,7 +51,7 @@ using (IServiceScope? scope = app.Services.CreateScope())
     var loggerFactory = service.GetRequiredService<ILoggerFactory>();
     try
     {
-        var context = service.GetRequiredService<AppIdentityDbContext>();
+        var context = service.GetRequiredService<EventlyDbContext>();
         var userManager = service.GetRequiredService<UserManager<User>>();
         var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
         await DefaultRoles.SeedRoles(roleManager);

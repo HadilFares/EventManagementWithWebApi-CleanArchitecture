@@ -10,6 +10,6 @@ namespace Application.Interfaces.Authentification
     public interface IAuthResponse
     {
         Task<AuthResponse> SignUpAsync(SignUp model, string orgin);
-        Task<string> AssignRolesAsync(AssignRolesDto model);
+       
     }
 }
