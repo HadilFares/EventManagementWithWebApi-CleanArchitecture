@@ -28,10 +28,23 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Authentificati
             if (!result.ISAuthenticated)
                 return BadRequest(result.Message);
 
-            //store the refresh token in a cookie
-           // SetRefreshTokenInCookies(result.RefreshToken, result.RefreshTokenExpiration);
+            return Ok(result);
+        }
+
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromForm] Login model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.LoginAsync(model);
+
+            if (!result.ISAuthenticated)
+                return BadRequest(result.Message);
 
             return Ok(result);
         }
+
     }
 }

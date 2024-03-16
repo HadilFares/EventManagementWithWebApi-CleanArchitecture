@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[1.2.0, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
               "version": "[2.2.2, )"
@@ -128,6 +132,10 @@
             "MailkitTools": {
               "target": "Package",
               "version": "[1.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.28, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -237,6 +245,10 @@
             "MailkitTools": {
               "target": "Package",
               "version": "[1.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.28, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -360,6 +372,10 @@
             "MailkitTools": {
               "target": "Package",
               "version": "[1.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.28, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
