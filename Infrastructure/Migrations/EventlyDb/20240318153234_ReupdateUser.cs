@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infra.Data.Migrations.EventlyDb
 {
     /// <inheritdoc />
-    public partial class UpdateAccountId : Migration
+    public partial class ReupdateUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,48 +19,59 @@ namespace Infra.Data.Migrations.EventlyDb
                 name: "IX_Accounts_UserId",
                 table: "Accounts");
 
-            migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "Accounts");
+            migrationBuilder.AddColumn<Guid>(
+                name: "AccountId",
+                table: "AspNetUsers",
+                type: "uniqueidentifier",
+                nullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Id",
+                name: "UserId",
                 table: "Accounts",
                 type: "nvarchar(450)",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(450)");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accounts_UserId",
+                table: "Accounts",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Accounts_AspNetUsers_Id",
+                name: "FK_Accounts_AspNetUsers_UserId",
                 table: "Accounts",
-                column: "Id",
+                column: "UserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Accounts_AspNetUsers_Id",
+                name: "FK_Accounts_AspNetUsers_UserId",
                 table: "Accounts");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "Accounts",
-                type: "uniqueidentifier",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
+            migrationBuilder.DropIndex(
+                name: "IX_Accounts_UserId",
+                table: "Accounts");
 
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.DropColumn(
+                name: "AccountId",
+                table: "AspNetUsers");
+
+            migrationBuilder.AlterColumn<string>(
                 name: "UserId",
                 table: "Accounts",
                 type: "nvarchar(450)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(450)",
+                oldNullable: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_UserId",

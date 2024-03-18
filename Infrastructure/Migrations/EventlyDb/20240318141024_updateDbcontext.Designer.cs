@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Data.Migrations.EventlyDb
 {
     [DbContext(typeof(EventlyDbContext))]
-    [Migration("20240317215300_AddCategory")]
-    partial class AddCategory
+    [Migration("20240318141024_updateDbcontext")]
+    partial class updateDbcontext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -278,7 +278,7 @@ namespace Infra.Data.Migrations.EventlyDb
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("Account")
+                        .WithOne("account")
                         .HasForeignKey("Domain.Entities.Account", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -350,10 +350,9 @@ namespace Infra.Data.Migrations.EventlyDb
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("Account")
-                        .IsRequired();
-
                     b.Navigation("Categories");
+
+                    b.Navigation("account");
                 });
 #pragma warning restore 612, 618
         }

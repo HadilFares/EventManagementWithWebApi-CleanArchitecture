@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Data.Migrations.EventlyDb
 {
     [DbContext(typeof(EventlyDbContext))]
-    [Migration("20240318003159_UpdateAccountId")]
-    partial class UpdateAccountId
+    [Migration("20240318134259_secondMigration")]
+    partial class secondMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,21 @@ namespace Infra.Data.Migrations.EventlyDb
 
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -270,8 +278,8 @@ namespace Infra.Data.Migrations.EventlyDb
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("Domain.Entities.Account", "Id")
+                        .WithOne("account")
+                        .HasForeignKey("Domain.Entities.Account", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -342,10 +350,9 @@ namespace Infra.Data.Migrations.EventlyDb
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("Account")
-                        .IsRequired();
-
                     b.Navigation("Categories");
+
+                    b.Navigation("account");
                 });
 #pragma warning restore 612, 618
         }

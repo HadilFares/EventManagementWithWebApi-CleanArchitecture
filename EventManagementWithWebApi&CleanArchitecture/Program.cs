@@ -88,7 +88,7 @@ using (IServiceScope? scope = app.Services.CreateScope())
         var userManager = service.GetRequiredService<UserManager<User>>();
         var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
         await DefaultRoles.SeedRoles(roleManager);
-        await DefaultAdmins.SeedUsers(userManager, context);
+      //  await DefaultAdmins.SeedUsers(userManager, context);
     }
     catch (Exception ex)
     {

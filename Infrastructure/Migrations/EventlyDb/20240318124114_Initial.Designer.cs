@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Data.Migrations.EventlyDb
 {
     [DbContext(typeof(EventlyDbContext))]
-    [Migration("20240313225342_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20240318124114_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace Infra.Data.Migrations.EventlyDb
 
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
-                    b.Property<int>("AccountId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -40,12 +38,33 @@ namespace Infra.Data.Migrations.EventlyDb
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("AccountId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Account");
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -259,8 +278,19 @@ namespace Infra.Data.Migrations.EventlyDb
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("account")
+                        .WithOne("Account")
                         .HasForeignKey("Domain.Entities.Account", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Category", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -320,8 +350,10 @@ namespace Infra.Data.Migrations.EventlyDb
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("account")
+                    b.Navigation("Account")
                         .IsRequired();
+
+                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }

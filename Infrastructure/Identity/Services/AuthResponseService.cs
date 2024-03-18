@@ -96,10 +96,31 @@ namespace Infra.Data.Identity.Services
                 LastName = model.LastName,
                 UserName = model.Username,
                 Email = model.Email,
-                PhoneNumber=model.Number,
+                PhoneNumber = model.Number,
+           
+        };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            var account = new Account
+            {
+                Status = AccountStatus.Pending,
+                UserId = user.Id,
             };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+
+          //  var userAccount = await _context.Accounts.FirstOrDefaultAsync(a => a.UserId == user.Id);
+            /*if (userAccount != null)
+            {
+                // Set the AccountId property of the User
+                user.AccountId = userAccount.Id;
+
+                // Save changes to update the user entity
+                await _userManager.UpdateAsync(user);
+                await _context.SaveChangesAsync();
+            }*/
+          
+
 
             // Check if user creation was successful
             if (!result.Succeeded)
@@ -125,19 +146,14 @@ namespace Infra.Data.Identity.Services
 
 
             // Create an account with pending status for the user
-            var account = new Account
-            {
-                Status = AccountStatus.Pending,
-                UserId = user.Id,
-                User=user
-            };
+           
+
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
-            user.Account = account;
-
-            // Save changes to the user entity
-            await _context.SaveChangesAsync();
-
+            // user.account = account;
+            //await _userManager.UpdateAsync(user);
+           
+          
             // Send email verification
             await _emailSender.SendEmailAsync(new EmailRequest
                 {
@@ -167,13 +183,13 @@ namespace Infra.Data.Identity.Services
             }
 
             var userpass = await _userManager.CheckPasswordAsync(user, model.Password);
-
-            if (user.Account == null || user.Account.Status != AccountStatus.Active)
+            var userAccount = await _context.Accounts.FirstOrDefaultAsync(a => a.UserId== user.Id);
+            if (userAccount?.Status != AccountStatus.Active)
             {
                 auth.Message = "Your account is not active. Please contact support.";
                 return auth;
             }
-
+            //|| user.AccountId.Status != AccountStatus.Active
 
             if (!userpass)
             {

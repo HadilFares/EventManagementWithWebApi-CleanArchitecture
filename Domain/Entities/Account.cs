@@ -18,9 +18,11 @@ namespace Domain.Entities
     }
     public  class Account : BaseEntity
     {
+        
         public AccountStatus Status { get; set; }
-        public string UserId { get; set; }
-        public virtual User? User { get; set; }
+        public string? UserId { get; set; }
+
+        public User? User { get; set; }
     }
 
     }

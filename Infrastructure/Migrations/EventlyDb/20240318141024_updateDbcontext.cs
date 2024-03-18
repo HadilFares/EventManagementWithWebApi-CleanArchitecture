@@ -5,7 +5,7 @@
 namespace Infra.Data.Migrations.EventlyDb
 {
     /// <inheritdoc />
-    public partial class JWTConfigurations : Migration
+    public partial class updateDbcontext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -5,7 +5,7 @@
 namespace Infra.Data.Migrations.EventlyDb
 {
     /// <inheritdoc />
-    public partial class EmailConfigurations : Migration
+    public partial class secondMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

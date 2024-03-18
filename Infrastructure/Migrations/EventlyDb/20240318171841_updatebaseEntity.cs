@@ -5,7 +5,7 @@
 namespace Infra.Data.Migrations.EventlyDb
 {
     /// <inheritdoc />
-    public partial class UpdateProgram : Migration
+    public partial class updatebaseEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -25,14 +25,22 @@ namespace Infrastructure.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(EventlyDbContext).Assembly);
-            modelBuilder.Entity<User>()
+           modelBuilder.Entity<User>()
             .HasOne(u => u.Account)
             .WithOne(a => a.User)
             .HasForeignKey<Account>(a => a.UserId);
+
+          /*  modelBuilder.Entity<Account>()
+         .HasOne(u => u.User)
+         .WithOne(a => a.Account)
+         .HasForeignKey<User>(a => a.AccountId);
+           */
+
             modelBuilder.Entity<User>()
            .HasMany(a => a.Categories) 
            .WithOne(b => b.User) 
-           .HasForeignKey(b => b.UserId); 
+           .HasForeignKey(b => b.UserId)
+             .IsRequired();
         }
 
     }

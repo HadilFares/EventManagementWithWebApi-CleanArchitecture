@@ -26,7 +26,7 @@ namespace Infra.Data.Services
         {
             var user = await _userManager.FindByEmailAsync(userUpdateDTO.Email);
 
-            if (user == null || user.Account == null)
+            if (user == null)
             {
                 return false; // User or associated account not found
             }

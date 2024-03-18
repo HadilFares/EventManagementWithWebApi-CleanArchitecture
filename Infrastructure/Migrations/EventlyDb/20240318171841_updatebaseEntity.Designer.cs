@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Data.Migrations.EventlyDb
 {
     [DbContext(typeof(EventlyDbContext))]
-    [Migration("20240317235256_UpdateAccount")]
-    partial class UpdateAccount
+    [Migration("20240318171841_updatebaseEntity")]
+    partial class updatebaseEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,13 +35,9 @@ namespace Infra.Data.Migrations.EventlyDb
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -74,6 +70,9 @@ namespace Infra.Data.Migrations.EventlyDb
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("AccountId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -130,6 +129,10 @@ namespace Infra.Data.Migrations.EventlyDb
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId")
+                        .IsUnique()
+                        .HasFilter("[AccountId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -275,17 +278,6 @@ namespace Infra.Data.Migrations.EventlyDb
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Account", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("Domain.Entities.Account", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -295,6 +287,15 @@ namespace Infra.Data.Migrations.EventlyDb
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.HasOne("Domain.Entities.Account", "Account")
+                        .WithOne("User")
+                        .HasForeignKey("Domain.Entities.User", "AccountId");
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -348,11 +349,13 @@ namespace Infra.Data.Migrations.EventlyDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entities.Account", b =>
+                {
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("Account")
-                        .IsRequired();
-
                     b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
