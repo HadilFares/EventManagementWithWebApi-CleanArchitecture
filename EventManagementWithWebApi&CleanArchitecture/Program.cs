@@ -13,6 +13,9 @@ using Infra.Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Application.Interfaces.IBaseRepository;
+using Infra.Data.BaseRepository;
+using Application.Interfaces.AccountRepository;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +39,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.SignIn.RequireConfirmedEmail = true;
 })  .AddEntityFrameworkStores<EventlyDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
@@ -82,7 +88,7 @@ using (IServiceScope? scope = app.Services.CreateScope())
         var userManager = service.GetRequiredService<UserManager<User>>();
         var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
         await DefaultRoles.SeedRoles(roleManager);
-        //await DefaultUsers.SeedUsers(userManager);
+        await DefaultAdmins.SeedUsers(userManager, context);
     }
     catch (Exception ex)
     {

@@ -27,7 +27,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

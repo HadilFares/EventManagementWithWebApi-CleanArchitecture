@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,13 +16,11 @@ namespace Domain.Entities
         Pending,  
         Canceled    
     }
-    public class Account
+    public  class Account : BaseEntity
     {
-        [Key]
-        public int AccountId {  get; set; }
         public AccountStatus Status { get; set; }
         public string UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
     }
 
     }

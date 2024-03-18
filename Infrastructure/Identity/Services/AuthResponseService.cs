@@ -95,7 +95,8 @@ namespace Infra.Data.Identity.Services
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 UserName = model.Username,
-                Email = model.Email
+                Email = model.Email,
+                PhoneNumber=model.Number,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -122,8 +123,23 @@ namespace Infra.Data.Identity.Services
 
             await _userManager.AddToRoleAsync(user, model.Role);
 
-                // Send email verification
-                await _emailSender.SendEmailAsync(new EmailRequest
+
+            // Create an account with pending status for the user
+            var account = new Account
+            {
+                Status = AccountStatus.Pending,
+                UserId = user.Id,
+                User=user
+            };
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+            user.Account = account;
+
+            // Save changes to the user entity
+            await _context.SaveChangesAsync();
+
+            // Send email verification
+            await _emailSender.SendEmailAsync(new EmailRequest
                 {
                     ToEmail = user.Email,
                     Body = $"Welcome to Evently!,For added security, your account needs to be validated  by an admin before you can access all features of our platform Once your account is validated, we will send you a link to set up your profile Thank you for joining Evently!",
@@ -144,28 +160,45 @@ namespace Infra.Data.Identity.Services
             var auth = new AuthResponse();
 
             var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                auth.Message = "User not found";
+                return auth;
+            }
+
             var userpass = await _userManager.CheckPasswordAsync(user, model.Password);
 
-            if (user == null || !userpass)
+            if (user.Account == null || user.Account.Status != AccountStatus.Active)
+            {
+                auth.Message = "Your account is not active. Please contact support.";
+                return auth;
+            }
+
+
+            if (!userpass)
             {
                 auth.Message = "Email or Password is incorrect";
                 return auth;
             }
+
             var roles = await _userManager.GetRolesAsync(user);
 
 
-            var jwtSecurityToken = await CreateJwtAsync(user,roles);
+                var jwtSecurityToken = await CreateJwtAsync(user, roles);
 
 
-            auth.Email = user.Email;
-            auth.Roles = roles.ToList();
-            auth.ISAuthenticated = true;
-            auth.UserName = user.UserName;
-            auth.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            auth.TokenExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();
-            auth.Message = "Login Succeeded ";
+                auth.Email = user.Email;
+                auth.Roles = roles.ToList();
+                auth.ISAuthenticated = true;
+                auth.UserName = user.UserName;
+                auth.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                auth.TokenExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();
+                auth.Message = "Login Succeeded ";
 
-            return auth;
+                return auth;
+            }
+           
+
+
         }
     }
-}

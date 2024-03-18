@@ -17,8 +17,10 @@ namespace Domain.Entities
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        public virtual  Account account { get; set; }
-       
+        public  Account Account { get; set; }
+        public virtual List<Category>? Categories { get; set; }
+
+
 
     }
 }

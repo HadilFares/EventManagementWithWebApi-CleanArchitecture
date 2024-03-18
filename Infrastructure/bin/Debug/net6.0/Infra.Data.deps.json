@@ -1006,6 +1006,7 @@
       },
       "Application/1.0.0": {
         "dependencies": {
+          "Domain": "1.0.0",
           "MailKit": "4.4.0",
           "MailKit.NET": "2.0.0",
           "MailkitTools": "1.2.0",
