@@ -14,7 +14,7 @@ namespace Application.Interfaces.AccountRepository
         
         Task<List<Account>> GetPendingAccountsAsync();
         Task<bool> UpdateAccountStatusAsync(Guid accountId, AccountStatus status);
-        Task  <bool>EditAccount(UserUpdateDTO userUpdateDTO);   
+        Task  <bool>EditProfile(UserDTO userUpdateDTO);   
 
     }
 }

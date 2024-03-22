@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos.Account
 {
-   public class UserUpdateDTO
+   public class UserDTO
     {
 
        [Required]
@@ -17,7 +17,7 @@ namespace Application.Dtos.Account
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }
-
+        [Required]
         [StringLength(50)]
         public string Username { get; set; }
 

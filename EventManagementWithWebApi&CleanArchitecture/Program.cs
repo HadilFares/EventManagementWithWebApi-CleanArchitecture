@@ -16,6 +16,8 @@ using System.Text;
 using Application.Interfaces.IBaseRepository;
 using Infra.Data.BaseRepository;
 using Application.Interfaces.AccountRepository;
+using Application.Interfaces.CategoryRepository;
+using Application.Interfaces.EventRepository;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,8 +44,10 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));

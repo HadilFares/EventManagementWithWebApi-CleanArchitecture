@@ -1,6 +1,8 @@
 ﻿using Application.Dtos.Category;
+using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.IBaseRepository;
 using Domain.Entities;
+using Infra.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,8 +12,9 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        IBaseRepository<Category> _categoryRepository;
-        public CategoryController(IBaseRepository<Category> categoryRepository ) {
+        // IBaseRepository<Category> _categoryRepository;
+        ICategoryService _categoryRepository;
+        public CategoryController(ICategoryService categoryRepository ) {
             _categoryRepository=categoryRepository;
         }
         [HttpGet]
@@ -34,7 +37,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
             var category = new Category
             {
                 Name = categoryDto.Name,
-                UserId = categoryDto.UserId
+                OrganizerId = categoryDto.UserId
             };
 
             _categoryRepository.Create(category);
@@ -69,10 +72,10 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory([FromBody] CategoryDTO categoryDto)
+        public async Task<IActionResult> UpdateCategory(Guid id ,[FromBody] CategoryDTO categoryDto)
         {
           
-            var existingCategory = await _categoryRepository.Get(categoryDto.UserId);
+            var existingCategory = await _categoryRepository.Get(id);
             if (existingCategory == null)
             {
                 return NotFound();
@@ -87,5 +90,19 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
             return NoContent();
         
         }
+
+        [HttpGet("GetCategoriesByUserId/{userId}")]
+        public async Task<IActionResult> GetCategoriesByUserId(string userId)
+        {
+            var categories = await _categoryRepository.GetCategoriesByUserId(userId);
+            if (categories == null || !categories.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(categories);
+        }
+
+
     }
 }

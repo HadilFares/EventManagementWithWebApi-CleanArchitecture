@@ -402,7 +402,6 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Infra.Data.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Application.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Domain.pdb
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\staticwebassets\msbuild.EventManagementWithWebApi&CleanArchitecture.Microsoft.AspNetCore.StaticWebAssets.props
@@ -417,3 +416,4 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.genruntimeconfig.cache
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\ref\EventManagementWithWebApi&CleanArchitecture.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cs

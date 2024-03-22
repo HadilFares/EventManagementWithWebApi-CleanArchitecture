@@ -22,7 +22,7 @@ namespace Infra.Data.Services
             _emailSender = emailSender;
         }
 
-        public async Task<bool> EditAccount(UserUpdateDTO userUpdateDTO)
+        public async Task<bool> EditProfile(UserDTO userUpdateDTO)
         {
             var user = await _userManager.FindByEmailAsync(userUpdateDTO.Email);
 

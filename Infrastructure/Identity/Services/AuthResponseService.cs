@@ -102,6 +102,7 @@ namespace Infra.Data.Identity.Services
             var result = await _userManager.CreateAsync(user, model.Password);
             var account = new Account
             {
+              //  Id = Guid.NewGuid(),
                 Status = AccountStatus.Pending,
                 UserId = user.Id,
             };
@@ -144,16 +145,6 @@ namespace Infra.Data.Identity.Services
 
             await _userManager.AddToRoleAsync(user, model.Role);
 
-
-            // Create an account with pending status for the user
-           
-
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
-            // user.account = account;
-            //await _userManager.UpdateAsync(user);
-           
-          
             // Send email verification
             await _emailSender.SendEmailAsync(new EmailRequest
                 {

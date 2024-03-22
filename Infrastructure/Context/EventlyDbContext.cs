@@ -19,28 +19,44 @@ namespace Infrastructure.Context
         }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<Event> Events { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EventlyDbContext).Assembly);
-           modelBuilder.Entity<User>()
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(EventlyDbContext).Assembly);
+        //User
+            modelBuilder.Entity<User>()
             .HasOne(u => u.Account)
             .WithOne(a => a.User)
-            .HasForeignKey<Account>(a => a.UserId);
+            .HasForeignKey<Account>(a => a.UserId)
+            .IsRequired();
 
-          /*  modelBuilder.Entity<Account>()
-         .HasOne(u => u.User)
-         .WithOne(a => a.Account)
-         .HasForeignKey<User>(a => a.AccountId);
-           */
-
+            /*  modelBuilder.Entity<Account>()
+           .HasOne(u => u.User)
+           .WithOne(a => a.Account)
+           .HasForeignKey<User>(a => a.AccountId);
+             */
+            //Category-Organizer
             modelBuilder.Entity<User>()
            .HasMany(a => a.Categories) 
            .WithOne(b => b.User) 
-           .HasForeignKey(b => b.UserId)
-             .IsRequired();
+           .HasForeignKey(b => b.OrganizerId)
+           .IsRequired();
+            //Event-Category
+           modelBuilder.Entity<Category>()
+          .HasMany(a => a.Events)
+          .WithOne(b => b.Category)
+          .HasForeignKey(b => b.CategoryId)
+          .IsRequired();
+
+            //Event-Organizer
+            modelBuilder.Entity<User>()
+           .HasMany(a => a.Events)
+           .WithOne(b => b.User)
+           .HasForeignKey(b => b.OrganizerId)
+           .IsRequired();
+
         }
 
     }

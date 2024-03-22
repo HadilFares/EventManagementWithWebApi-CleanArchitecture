@@ -24,10 +24,6 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Authentificati
                 return BadRequest(ModelState);
             var orgin = Request.Headers["origin"];
             var result = await _authService.SignUpAsync(model, orgin);
-
-            if (!result.ISAuthenticated)
-                return BadRequest(result.Message);
-
             return Ok(result);
         }
 
