@@ -21,6 +21,11 @@ namespace Infra.Data.Services
 
         }
 
+        public async Task<IEnumerable<Event>> GetAllValidatedEvents()
+        {
+            return await _context.Events.Where(e => e.IsValidated).ToListAsync();
+        }
+
         public async Task<List<Event>> GetEventsByCatagoryId(Guid categoryId)
         {
             return await _context.Events
@@ -31,7 +36,7 @@ namespace Infra.Data.Services
         public async Task<List<Event>> GetEventsByOrganizerId(string OrganizerId)
         {
             return await _context.Events
-                  .Where(c => c.OrganizerId == OrganizerId)
+                  .Where(c => c.UserId == OrganizerId)
                   .ToListAsync();
         }
     }

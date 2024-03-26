@@ -2,9 +2,11 @@
 using Application.Dtos.Email;
 using Application.Interfaces.Authentification;
 using Application.Interfaces.Email;
+using Application.Interfaces.Stripe;
 using Domain.Entities;
 using Domain.Settings;
 using Infra.Data.Identity.Roles;
+using Infra.Data.Services;
 using Infrastructure.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,20 +30,19 @@ namespace Infra.Data.Identity.Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly EventlyDbContext _context;
         private readonly IEmailService _emailSender;
+        private readonly IStripeService _stripeService;
         private readonly JWT _Jwt;
-        public AuthResponseService(IEmailService emailSender, IOptions<JWT> jwt, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, EventlyDbContext context)
+        public AuthResponseService(IEmailService emailSender,IStripeService stripeService, IOptions<JWT> jwt, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, EventlyDbContext context)
         {
             _userManager = userManager;
             _context = context;
             _roleManager = roleManager;
             _emailSender = emailSender;
+            _stripeService= stripeService;
             _Jwt = jwt.Value;
         }
 
 
-
-        
-     
 
         private async Task<JwtSecurityToken> CreateJwtAsync(User user, IList<string> roles)
         {
@@ -105,21 +106,13 @@ namespace Infra.Data.Identity.Services
               //  Id = Guid.NewGuid(),
                 Status = AccountStatus.Pending,
                 UserId = user.Id,
+                AccountCreationDate = DateTime.UtcNow
             };
 
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
-          //  var userAccount = await _context.Accounts.FirstOrDefaultAsync(a => a.UserId == user.Id);
-            /*if (userAccount != null)
-            {
-                // Set the AccountId property of the User
-                user.AccountId = userAccount.Id;
-
-                // Save changes to update the user entity
-                await _userManager.UpdateAsync(user);
-                await _context.SaveChangesAsync();
-            }*/
+        
           
 
 

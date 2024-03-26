@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.28" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="MimeKit" Version="4.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Stripe.net" Version="43.20.0" />
   </ItemGroup>
 
   <ItemGroup>

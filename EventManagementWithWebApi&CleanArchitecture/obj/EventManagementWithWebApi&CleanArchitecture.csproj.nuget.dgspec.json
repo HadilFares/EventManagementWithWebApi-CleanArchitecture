@@ -67,6 +67,14 @@
             "MimeKit": {
               "target": "Package",
               "version": "[4.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[43.20.0, )"
             }
           },
           "imports": [
@@ -176,6 +184,14 @@
             "MimeKit": {
               "target": "Package",
               "version": "[4.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[43.20.0, )"
             }
           },
           "imports": [
@@ -302,6 +318,14 @@
               "target": "Package",
               "version": "[4.4.0, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[43.20.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -424,6 +448,14 @@
             "MimeKit": {
               "target": "Package",
               "version": "[4.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[43.20.0, )"
             }
           },
           "imports": [

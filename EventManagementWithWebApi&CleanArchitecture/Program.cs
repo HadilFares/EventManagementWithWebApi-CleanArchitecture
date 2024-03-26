@@ -18,6 +18,10 @@ using Infra.Data.BaseRepository;
 using Application.Interfaces.AccountRepository;
 using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.EventRepository;
+using Application.Interfaces.CommentRepository;
+using Application.Interfaces.Stripe;
+using Application.Interfaces.SubscriptionRepository;
+using Application.Interfaces.SubscriptionPlanRepository;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +52,10 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IStripeService, StripeService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+builder.Services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));

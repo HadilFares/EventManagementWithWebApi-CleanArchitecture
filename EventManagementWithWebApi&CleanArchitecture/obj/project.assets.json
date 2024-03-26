@@ -2864,6 +2864,23 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "Stripe.net/43.20.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "System.Configuration.ConfigurationManager": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "type": "package",
         "dependencies": {
@@ -3933,7 +3950,9 @@
           "MailkitTools": "1.2.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.28",
           "Microsoft.AspNetCore.Http": "2.2.2",
-          "MimeKit": "4.4.0"
+          "MimeKit": "4.4.0",
+          "Newtonsoft.Json": "13.0.1",
+          "Stripe.net": "43.20.0"
         },
         "compile": {
           "bin/placeholder/Application.dll": {}
@@ -3955,7 +3974,9 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.28",
           "Microsoft.EntityFrameworkCore": "7.0.16",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.16",
-          "MimeKit": "4.4.0"
+          "MimeKit": "4.4.0",
+          "Newtonsoft.Json": "13.0.1",
+          "Stripe.net": "43.20.0"
         },
         "compile": {
           "bin/placeholder/Domain.dll": {}
@@ -3979,7 +4000,9 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.28",
           "Microsoft.EntityFrameworkCore": "7.0.16",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.16",
-          "MimeKit": "4.4.0"
+          "MimeKit": "4.4.0",
+          "Newtonsoft.Json": "13.0.1",
+          "Stripe.net": "43.20.0"
         },
         "compile": {
           "bin/placeholder/Infra.Data.dll": {}
@@ -8147,6 +8170,30 @@
         "sqlitepclraw.provider.e_sqlite3.nuspec"
       ]
     },
+    "Stripe.net/43.20.0": {
+      "sha512": "ct3jKGFUfrz5+f68B8bwHPZItybIZuRhu1JHVM+VThRy/cB6OaJbANSwoV52rUYB0cDZ+yQ9rmXgBv4/LddOHA==",
+      "type": "package",
+      "path": "stripe.net/43.20.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "icon.png",
+        "lib/net461/Stripe.net.dll",
+        "lib/net461/Stripe.net.xml",
+        "lib/net5.0/Stripe.net.dll",
+        "lib/net5.0/Stripe.net.xml",
+        "lib/net6.0/Stripe.net.dll",
+        "lib/net6.0/Stripe.net.xml",
+        "lib/netcoreapp3.1/Stripe.net.dll",
+        "lib/netcoreapp3.1/Stripe.net.xml",
+        "lib/netstandard2.0/Stripe.net.dll",
+        "lib/netstandard2.0/Stripe.net.xml",
+        "stripe.net.43.20.0.nupkg.sha512",
+        "stripe.net.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.5.0": {
       "sha512": "FK05XokgjgwlCI6wCT+D4/abtQkL1X1/B9Oas6uIwHFmYrIO9WUD5aLC9IzMs9GnHfUXOtXZ2S43gN1mhs5+aA==",
       "type": "package",
@@ -10781,6 +10828,8 @@
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.19.5",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.16",
       "MimeKit >= 4.4.0",
+      "Newtonsoft.Json >= 13.0.1",
+      "Stripe.net >= 43.20.0",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -10890,6 +10939,14 @@
           "MimeKit": {
             "target": "Package",
             "version": "[4.4.0, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.1, )"
+          },
+          "Stripe.net": {
+            "target": "Package",
+            "version": "[43.20.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

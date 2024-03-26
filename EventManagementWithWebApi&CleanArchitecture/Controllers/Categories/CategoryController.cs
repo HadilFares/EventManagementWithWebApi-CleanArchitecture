@@ -34,6 +34,15 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
                 return BadRequest(ModelState);
             }
 
+            var existingCategory = await _categoryRepository.FindByConditionAsync(c => c.Name == categoryDto.Name);
+            if (existingCategory != null)
+            {
+                // If a category with the same name exists, return a conflict response
+                return Conflict("A category with the same name already exists.");
+            }
+
+
+
             var category = new Category
             {
                 Name = categoryDto.Name,
@@ -80,6 +89,15 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
             {
                 return NotFound();
             }
+
+             // Check if the new name already exists for a different category
+    var categoryWithSameName = await _categoryRepository.FindByConditionAsync(c => c.Name == categoryDto.Name && c.Id != id);
+    if (categoryWithSameName != null)
+    {
+        return Conflict("A category with the same name already exists.");
+    }
+
+
 
             existingCategory.Name = categoryDto.Name;
            

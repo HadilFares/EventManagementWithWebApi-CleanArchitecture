@@ -20,6 +20,7 @@ namespace Domain.Entities
     {
         
         public AccountStatus Status { get; set; }
+        public DateTime AccountCreationDate { get; set; }
         public string? UserId { get; set; }
 
         public User? User { get; set; }

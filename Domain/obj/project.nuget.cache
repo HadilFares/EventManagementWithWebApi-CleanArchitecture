@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "zSXLrWFKUQgIzUzIWUr8v0MnG+jeerT3M2JovqFw1JBhDgp0u93qby/O40iFtIAZQh1NKJHPiamfeL9qxFg3vg==",
+  "dgSpecHash": "qouTXPdCq85psPFIoZdOiYHhEJ7nDe6kIINMi81DU4KEw1fD1YX2DDkbr2aLMH6CvWoKx0MTHcrvvNbM025iWw==",
   "success": true,
   "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\EventManagementWithWebApi&CleanArchitecture\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
@@ -73,7 +73,8 @@
     "C:\\Users\\ASUS\\.nuget\\packages\\mimekit\\4.4.0\\mimekit.4.4.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
-    "C:\\Users\\ASUS\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\stripe.net\\43.20.0\\stripe.net.43.20.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.codedom\\4.5.0\\system.codedom.4.5.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.1\\system.configuration.configurationmanager.6.0.1.nupkg.sha512",

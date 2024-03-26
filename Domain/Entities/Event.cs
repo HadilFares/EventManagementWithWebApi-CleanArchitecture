@@ -31,10 +31,12 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Please enter the NbStand of Event.")]
         public int NbStand {  get; set; }
         public int Ratings { get; set; }
-        public string OrganizerId { get; set; }
+        public bool IsValidated { get; set; } = false;
+        public string? UserId { get; set; }
         public  virtual User? User { get; set; }
-        public Guid CategoryId { get; set; }
-        public  virtual Category?Category { get; set; }
+        public Guid? CategoryId { get; set; }
+        public  virtual Category? Category { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
 
     }
 }

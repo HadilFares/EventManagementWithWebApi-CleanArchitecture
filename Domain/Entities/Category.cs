@@ -12,7 +12,7 @@ namespace Domain.Entities
     {
         [Required]
         public string Name { get; set; }
-        public string OrganizerId { get; set; }
+        public string? OrganizerId { get; set; }
         public  virtual User? User { get; set; }
         public ICollection<Event>? Events { get; set; }
 

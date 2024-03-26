@@ -2,6 +2,7 @@
 using Application.Dtos.Email;
 using Application.Interfaces.AccountRepository;
 using Application.Interfaces.Email;
+using Application.Interfaces.UserRepository;
 using Domain.Entities;
 using Infra.Data.BaseRepository;
 using Infrastructure.Context;
@@ -16,10 +17,12 @@ namespace Infra.Data.Services
         private readonly EventlyDbContext _context;
         private readonly IEmailService _emailSender;
         private readonly UserManager<User> _userManager;
-        public AccountService(EventlyDbContext context, UserManager<User> userManager, IEmailService emailSender) : base(context)
+        private readonly IUserService _userService;
+        public AccountService(EventlyDbContext context, UserManager<User> userManager, IEmailService emailSender,IUserService userService) : base(context)
         {
             _context = context;
             _emailSender = emailSender;
+            _userService = userService;
         }
 
         public async Task<bool> EditProfile(UserDTO userUpdateDTO)
@@ -28,7 +31,7 @@ namespace Infra.Data.Services
 
             if (user == null)
             {
-                return false; // User or associated account not found
+                return false; 
             }
 
             // Update user information
@@ -38,11 +41,11 @@ namespace Infra.Data.Services
             try
             {
                 await _context.SaveChangesAsync();
-                return true; // Update successful
+                return true; 
             }
             catch (DbUpdateException)
             {
-                return false; // Error occurred while saving changes
+                return false;
             }
         }
 
@@ -52,6 +55,8 @@ namespace Infra.Data.Services
             var pendingAccount = await FindByConditionAsync(account => account.Status == AccountStatus.Pending);
             return pendingAccount != null ? new List<Account> { pendingAccount } : new List<Account>();
         }
+
+       
 
         public async Task<bool> UpdateAccountStatusAsync(Guid accountId, AccountStatus status)
         {
@@ -63,15 +68,28 @@ namespace Infra.Data.Services
                 await _context.SaveChangesAsync();
 
                 // Check if the account has a user before sending the email
-                if (account.User != null)
+                if (account.User != null )
                 {
                     // Send the email
-                    await _emailSender.SendEmailAsync(new EmailRequest
+                    var userRoles = await _userService.GetUserRolesAsync(account.User);
+                    if (!userRoles.Contains("organizer"))
                     {
-                        ToEmail = account.User.Email,
-                        Body = $"Welcome to Evently! Your account has been successfully activated. You can now access all features of our platform. Thank you for joining Evently!",
-                        Subject = "Account Activation"
-                    });
+                        await _emailSender.SendEmailAsync(new EmailRequest
+                        {
+                            ToEmail = account.User.Email,
+                            Body = $"Welcome to Evently! Your account has been successfully activated. You can now access all features of our platform. Thank you for joining Evently!",
+                            Subject = "Account Activation"
+                        });
+                    }
+                    else
+                    {
+                        await _emailSender.SendEmailAsync(new EmailRequest
+                        {
+                            ToEmail = account.User.Email,
+                            Body = $"Welcome to Evently! Your account has been successfully activated. You can now access all features of our platform and do the process of subscription . Thank you for joining Evently!",
+                            Subject = "Account Activation"
+                        });
+                    }
                 }
 
                 return true;

@@ -6,6 +6,7 @@ using Domain.Entities;
 using Infra.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 
 namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
 {
@@ -26,6 +27,32 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             var events = await _eventRepository.GetAll();
             return events;
         }
+        [HttpGet("validated")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetAllValidatedEvents()
+        {
+            var events = await _eventRepository.GetAllValidatedEvents();
+            return Ok(events);
+        }
+
+
+        [HttpPut("{id}/validate")]
+        public async Task<IActionResult> ValidateEvent(Guid id)
+        {
+            var existingEvent = await _eventRepository.Get(id);
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            existingEvent.IsValidated = true;
+
+            _eventRepository.Update(existingEvent);
+            await _eventRepository.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
 
         [HttpGet]
         [Route("GetEventById/{id}")]
@@ -65,6 +92,15 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             }
 
             existingEvent.Name = eventDto.Name;
+            existingEvent.Description = eventDto.Description;
+            existingEvent.Type = eventDto.Type;
+            existingEvent.Price = eventDto.Price;
+            existingEvent.CategoryId = eventDto.CategoryId;
+            existingEvent.Date = eventDto.Date;
+            existingEvent.Location = eventDto.Location;
+            existingEvent.NbStand = eventDto.NbStand;
+            existingEvent.Ratings = eventDto.Ratings;
+            existingEvent.IsValidated = false;
 
 
             _eventRepository.Update(existingEvent);
@@ -86,7 +122,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             var NewEvent = new Event
         {
             Name = eventDto.Name,
-            OrganizerId = eventDto.OrganizerId,
+            UserId = eventDto.OrganizerId,
             Description = eventDto.Description,
             Type=eventDto.Type,
             Price=eventDto.Price,

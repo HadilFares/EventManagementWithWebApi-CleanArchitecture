@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Data", "Infrastructur
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{18FC56F9-A01A-4E2F-BBFD-7C1F38C48573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{42512366-5D57-4C80-B64F-E3E73633AAEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{42512366-5D57-4C80-B64F-E3E73633AAEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Triggers", "Triggers", "{A0407B51-0412-41A3-8B1E-F0B1EBE49542}"
+	ProjectSection(SolutionItems) = preProject
+		CreateTriggers.sql = CreateTriggers.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +55,7 @@ Global
 		{9A95F720-9F8D-40FF-9ABF-4CC4411CA451} = {87E2E568-87A4-4DB3-8A14-B3F17FE8D5FD}
 		{84D90CD1-720C-46EC-845F-6050D4C7219C} = {B8C7781A-F444-4ABD-B6FA-FD8DA8D05905}
 		{42512366-5D57-4C80-B64F-E3E73633AAEB} = {18FC56F9-A01A-4E2F-BBFD-7C1F38C48573}
+		{A0407B51-0412-41A3-8B1E-F0B1EBE49542} = {B8C7781A-F444-4ABD-B6FA-FD8DA8D05905}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {66686482-830C-4179-B5A6-684A5A41C64B}
