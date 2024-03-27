@@ -100,6 +100,8 @@ namespace Infra.Data.Identity.Services
                 PhoneNumber = model.Number,
            
         };
+           
+
             var result = await _userManager.CreateAsync(user, model.Password);
             var account = new Account
             {
@@ -145,11 +147,10 @@ namespace Infra.Data.Identity.Services
                     Body = $"Welcome to Evently!,For added security, your account needs to be validated  by an admin before you can access all features of our platform Once your account is validated, we will send you a link to set up your profile Thank you for joining Evently!",
                     Subject = "Registration"
                 });
-
+            auth.ISAuthenticated = true;
                 auth.Email = user.Email;
                 auth.UserName = user.UserName;
                 auth.Message = "SignUp Succeeded";
-
                 return auth;
             }
         

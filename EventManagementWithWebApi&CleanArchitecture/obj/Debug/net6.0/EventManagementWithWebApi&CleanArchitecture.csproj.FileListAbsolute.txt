@@ -418,3 +418,6 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\ref\EventManagementWithWebApi&CleanArchitecture.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Stripe.net.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

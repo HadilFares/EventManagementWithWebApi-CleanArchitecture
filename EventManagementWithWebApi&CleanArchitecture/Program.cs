@@ -22,10 +22,21 @@ using Application.Interfaces.CommentRepository;
 using Application.Interfaces.Stripe;
 using Application.Interfaces.SubscriptionRepository;
 using Application.Interfaces.SubscriptionPlanRepository;
+using Application.Interfaces.UserRepository;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Stripe;
+using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+//const string policyName = "CorsPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 // Add services to the container.
 /*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));*/
@@ -47,18 +58,25 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountService, Infra.Data.Services.AccountService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IEventService, Infra.Data.Services.EventService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IStripeService, StripeService>();
-builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+builder.Services.AddScoped<ISubscriptionService, Infra.Data.Services.SubscriptionService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNameCaseInsensitive = false;
+    options.SerializerOptions.PropertyNamingPolicy = null;
+    options.SerializerOptions.WriteIndented = true;
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -81,8 +99,20 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ContractResolver =   new DefaultContractResolver();
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
+  /*  .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+    });*/
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -109,19 +139,23 @@ using (IServiceScope? scope = app.Services.CreateScope())
     }
 }
 
-
+app.UseCors("CORSPolicy");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseHttpsRedirection();
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.MapControllers();
-
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 app.Run();
