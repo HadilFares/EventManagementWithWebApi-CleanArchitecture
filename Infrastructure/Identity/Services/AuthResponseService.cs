@@ -187,7 +187,7 @@ namespace Infra.Data.Identity.Services
 
                 var jwtSecurityToken = await CreateJwtAsync(user, roles);
 
-
+                auth.Id = user.Id;
                 auth.Email = user.Email;
                 auth.Roles = roles.ToList();
                 auth.ISAuthenticated = true;

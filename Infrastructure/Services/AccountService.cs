@@ -23,6 +23,7 @@ namespace Infra.Data.Services
             _context = context;
             _emailSender = emailSender;
             _userService = userService;
+            _userManager= userManager;
         }
 
         public async Task<bool> EditProfile(UserDTO userUpdateDTO)
@@ -50,13 +51,40 @@ namespace Infra.Data.Services
         }
 
 
-        public async Task<List<Account>> GetPendingAccountsAsync()
+        public async Task<List<Account>> GetPendingOrganizerAndParticipantAccountsAsync()
         {
-            var pendingAccount = await FindByConditionAsync(account => account.Status == AccountStatus.Pending);
-            return pendingAccount != null ? new List<Account> { pendingAccount } : new List<Account>();
+
+            var organizers = await _userManager.GetUsersInRoleAsync("Organizer");
+            var participants = await _userManager.GetUsersInRoleAsync("Participant");
+            // Combine the lists of users with these roles
+            var organizersAndParticipants = organizers.Concat(participants);  
+            // Retrieve pending accounts associated with the organizers and participants
+            var pendingAccounts = organizersAndParticipants
+                .Select(user => user.Account)
+                .Where(account => account.Status == AccountStatus.Pending)
+                .ToList();
+
+            return pendingAccounts;
+
+
         }
 
-       
+
+        public async Task<List<Account>> GetPendingExhibitorAccountsAsync()
+        {
+            var Exhibitors = await _userManager.GetUsersInRoleAsync("Exhibitor");
+            // Combine the lists of users with these roles
+     
+            // Retrieve pending accounts associated with the organizers and participants
+            var pendingAccounts = Exhibitors
+                .Select(user => user.Account)
+                .Where(account => account.Status == AccountStatus.Pending)
+                .ToList();
+
+            return pendingAccounts;
+        }
+
+        
 
         public async Task<bool> UpdateAccountStatusAsync(Guid accountId, AccountStatus status)
         {
@@ -97,6 +125,7 @@ namespace Infra.Data.Services
             return false;
 
         }
+
     }
 
 

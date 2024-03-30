@@ -9,6 +9,7 @@ namespace Application.Dtos.Account
 {
     public class AuthResponse
     {
+        public string Id {  get; set; }
         public string? Message { get; set; }
 
         //by default false

@@ -36,19 +36,26 @@ namespace Infrastructure.Context
             .HasForeignKey<Account>(a => a.UserId)
             .IsRequired();
 
-     
+
+           modelBuilder.Entity<Category>()
+          .HasOne(c => c.User) 
+          .WithMany(u => u.Categories) 
+          .HasForeignKey(c => c.OrganizerId) 
+          .OnDelete(DeleteBehavior.SetNull);
+
+
             //Category-Organizer
             modelBuilder.Entity<User>()
            .HasMany(a => a.Categories) 
            .WithOne(b => b.User) 
            .HasForeignKey(b => b.OrganizerId)
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.SetNull);
             //Event-Category
             modelBuilder.Entity<Category>()
            .HasMany(a => a.Events)
            .WithOne(b => b.Category)
            .HasForeignKey(b => b.CategoryId)
-             .OnDelete(DeleteBehavior.ClientSetNull);
+           .OnDelete(DeleteBehavior.SetNull);
 
 
 
@@ -57,7 +64,7 @@ namespace Infrastructure.Context
               .HasMany(a => a.Events)
               .WithOne(b => b.User)
               .HasForeignKey(b => b.UserId)
-              .OnDelete(DeleteBehavior.ClientSetNull);
+              .OnDelete(DeleteBehavior.SetNull);
 
 
             //Comment-participant
@@ -66,7 +73,7 @@ namespace Infrastructure.Context
              .HasMany(a => a.Comments)
              .WithOne(b => b.User)
              .HasForeignKey(b => b.UserId)
-            .OnDelete(DeleteBehavior.ClientSetNull);
+            .OnDelete(DeleteBehavior.SetNull);
 
 
             //event-comment
@@ -74,17 +81,10 @@ namespace Infrastructure.Context
             .HasMany(a => a.Comments)
             .WithOne(b => b.Event)
             .HasForeignKey(b => b.EventId)
-              .OnDelete(DeleteBehavior.ClientSetNull);
+              .OnDelete(DeleteBehavior.SetNull);
 
 
-            /* modelBuilder.Entity<User>().ToTable(d => d.HasTrigger("[User_Delete]"));
-
-             modelBuilder.Entity<Category>().ToTable(e => e.HasTrigger("[Category_Delete]"));
-
-             modelBuilder.Entity<Event>().ToTable(p => p.HasTrigger("[Event_Delete]"));
-
-             modelBuilder.Entity<Comment>().ToTable(t => t.HasTrigger("[Comment_Delete]"));*/
-
+          
           //User-Subscription
             modelBuilder.Entity<User>()
                .HasOne(u => u.Subscription) 

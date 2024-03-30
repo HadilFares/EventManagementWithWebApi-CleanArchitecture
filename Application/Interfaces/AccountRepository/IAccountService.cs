@@ -12,7 +12,8 @@ namespace Application.Interfaces.AccountRepository
     public interface IAccountService:IBaseRepository<Account>
     {
         
-        Task<List<Account>> GetPendingAccountsAsync();
+        Task<List<Account>> GetPendingOrganizerAndParticipantAccountsAsync();
+        Task<List<Account>> GetPendingExhibitorAccountsAsync();
         Task<bool> UpdateAccountStatusAsync(Guid accountId, AccountStatus status);
         Task  <bool>EditProfile(UserDTO userUpdateDTO);
        // Task<bool> IsUserOrganizerAsync(User user);

@@ -1,5 +1,6 @@
 ﻿using Application.Dtos.Account;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,8 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("CreateUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userDTO)
         {
             try
@@ -50,6 +52,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
         }
 
         [HttpGet("{id}")]
+
         public async Task<IActionResult> GetUserById(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -76,30 +79,33 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
         }
 
 
-        [HttpGet]
-        public IActionResult GetAllUsers()
+        [HttpGet("AllUsers")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllUsersAsync()
         {
-            var users = _userManager.Users;
-            var userDTOs = new List<UserDTO>();
+            var organizers = await _userManager.GetUsersInRoleAsync("Organizer");
+            var participants = await _userManager.GetUsersInRoleAsync("Participant");
 
-            foreach (var user in users)
+            // Concatenate the lists of users with these roles
+            var usersWithRoles = organizers.Concat(participants);
+            var users = _userManager.Users;
+            var userDTOs = usersWithRoles.Select(user => new UserDTO
             {
-                var userDTO = new UserDTO
-                {
-                   // Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Username = user.UserName,
-                    Number = user.PhoneNumber,
-                    Password = user.PasswordHash
-                    // Map other properties as needed
-                };
-                userDTOs.Add(userDTO);
-            }
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Username = user.UserName,
+                Number = user.PhoneNumber,
+                Password = user.PasswordHash
+                // Map other properties as needed
+            }).ToList();
 
             return Ok(userDTOs);
         }
+
+
+
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id, [FromBody] UserDTO userDTO)
@@ -130,6 +136,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
 
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

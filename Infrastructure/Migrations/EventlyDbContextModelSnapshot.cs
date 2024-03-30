@@ -425,7 +425,8 @@ namespace Infra.Data.Migrations
                 {
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Categories")
-                        .HasForeignKey("OrganizerId");
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("User");
                 });
@@ -434,11 +435,13 @@ namespace Infra.Data.Migrations
                 {
                     b.HasOne("Domain.Entities.Event", "Event")
                         .WithMany("Comments")
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Event");
 
@@ -449,11 +452,13 @@ namespace Infra.Data.Migrations
                 {
                     b.HasOne("Domain.Entities.Category", "Category")
                         .WithMany("Events")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Events")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Category");
 

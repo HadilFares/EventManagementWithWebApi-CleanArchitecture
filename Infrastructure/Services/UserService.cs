@@ -19,10 +19,12 @@ namespace Infra.Data.Services
 
 
         }
-        public async  Task<List<string>> GetUserRolesAsync(User user)
+        public async Task<List<string>> GetUserRolesAsync(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             return roles.ToList();
+
         }
+
     }
 }

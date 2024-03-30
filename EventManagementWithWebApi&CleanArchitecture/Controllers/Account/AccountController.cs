@@ -1,7 +1,10 @@
 ﻿using Application.Interfaces.AccountRepository;
 using Domain.Entities;
 using Infra.Data.BaseRepository;
+using Infra.Data.Identity.Roles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
@@ -11,22 +14,33 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
     public class AccountController : ControllerBase
     {
         private IAccountService _accountService;
-
-        public AccountController(IAccountService accountService) {
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AccountController(IAccountService accountService, UserManager<User> userManager, RoleManager<IdentityRole> roleManager) {
             _accountService = accountService;
+            _roleManager = roleManager;
         }
 
-
+      
         [HttpGet]
         [Route("GetPendingAccounts")]
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetPendingAccounts()
         {
-            var pendingAccounts = await _accountService.GetPendingAccountsAsync();
+            var pendingAccounts = await _accountService.GetPendingOrganizerAndParticipantAccountsAsync();
+            return Ok(pendingAccounts);
+        }
+
+        [HttpGet]
+        [Route("GetPendingExhibitorsAccounts")]
+        [Authorize(Roles = "Organizer")]
+        public async Task<IActionResult> GetPendingExhibitorsAccounts()
+        {
+            var pendingAccounts = await _accountService.GetPendingExhibitorAccountsAsync();
             return Ok(pendingAccounts);
         }
 
         [HttpPut("{id}/status/{status}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAccountStatus(Guid id, AccountStatus status)
         {
             var result = await _accountService.UpdateAccountStatusAsync(id, status);
@@ -39,6 +53,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
         
         [HttpGet]
         [Route("GetAccount/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAccount(Guid id)
         {
             var account = await _accountService.Get(id);
@@ -51,6 +66,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
 
         [HttpGet]
         [Route("GetAllAccounts")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAccount()
         {
             var account = await _accountService.GetAll();

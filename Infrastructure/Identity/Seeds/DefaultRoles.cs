@@ -17,16 +17,7 @@ namespace Infra.Data.Identity.Seeds
             await roleManager.CreateAsync(new IdentityRole(Roles.Roles.Organizer.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Roles.Participant.ToString()));
 
-
-           /* var adminRole = await roleManager.FindByNameAsync(Roles.Roles.Admin.ToString());
-            await roleManager.AddClaimAsync(adminRole, new Claim(ClaimTypes.Role, Roles.Roles.Admin.ToString()));
-            var OrganizerRole = await roleManager.FindByNameAsync(Roles.Roles.Organizer.ToString());
-            await roleManager.AddClaimAsync(OrganizerRole, new Claim(ClaimTypes.Role, Roles.Roles.Organizer.ToString()));
-            var ParticipantRole = await roleManager.FindByNameAsync(Roles.Roles.Participant.ToString());
-            await roleManager.AddClaimAsync(ParticipantRole, new Claim(ClaimTypes.Role, Roles.Roles.Participant.ToString()));
-            var ExhibitorRole = await roleManager.FindByNameAsync(Roles.Roles.Exhibitor.ToString());
-            await roleManager.AddClaimAsync(ExhibitorRole, new Claim(ClaimTypes.Role, Roles.Roles.Exhibitor.ToString()));
- */       }
+      }
 
     }
 }
