@@ -77,8 +77,6 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
 
             return Ok(userDTO);
         }
-
-
         [HttpGet("AllUsers")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsersAsync()

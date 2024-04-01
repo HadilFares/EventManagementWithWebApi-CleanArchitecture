@@ -19,6 +19,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,13 +45,13 @@ namespace Infra.Data.Identity.Services
 
 
 
-        private async Task<JwtSecurityToken> CreateJwtAsync(User user, IList<string> roles)
+        private async Task<JwtSecurityToken> CreateJwtAsync(User user)
         {
             var symmetricSecurityKey =
           new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Jwt.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
-
+            var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.UserName),
@@ -74,6 +75,94 @@ namespace Infra.Data.Identity.Services
             return jwtSecurityToken;
         }
 
+        //Generate RefreshToken
+        private RefreshToken GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+
+            using var generator = new RNGCryptoServiceProvider();
+
+            generator.GetBytes(randomNumber);
+
+            return new RefreshToken
+            {
+                Token = Convert.ToBase64String(randomNumber),
+                ExpireOn = DateTime.UtcNow.AddDays(10),
+                CreateOn = DateTime.UtcNow
+            };
+        }
+        public async Task<AuthResponse> RefreshTokenCheckAsync(string token)
+        {
+            var auth = new AuthResponse();
+
+            //find the user that match the sent refresh token
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
+
+            if (user == null)
+            {
+                auth.Message = "Invalid Token";
+                return auth;
+            }
+
+            // check if the refreshtoken is active
+            var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
+
+            if (!refreshToken.IsActive)
+            {
+                auth.Message = "Inactive Token";
+                return auth;
+            }
+
+
+
+            //revoke the sent Refresh Tokens
+            refreshToken.RevokedOn = DateTime.UtcNow;
+
+            var newRefreshToken = GenerateRefreshToken();
+            user.RefreshTokens.Add(newRefreshToken);
+            await _userManager.UpdateAsync(user);
+
+            var jwtSecurityToken = await CreateJwtAsync(user);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            auth.Email = user.Email;
+            auth.Roles = roles.ToList();
+            auth.ISAuthenticated = true;
+            auth.UserName = user.UserName;
+            auth.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            auth.TokenExpiresOn = jwtSecurityToken.ValidTo;
+            auth.RefreshToken = newRefreshToken.Token;
+            auth.RefreshTokenExpiration = newRefreshToken.ExpireOn;
+
+            return auth;
+        }
+
+        
+
+        //revoke Refresh token
+        public async Task<bool> RevokeTokenAsync(string token)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
+
+            if (user == null)
+                return false;
+
+            // check if the refreshtoken is active
+            var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
+
+            if (!refreshToken.IsActive)
+                return false;
+
+            //revoke the sent Refresh Tokens
+            refreshToken.RevokedOn = DateTime.UtcNow;
+
+            var newRefreshToken = GenerateRefreshToken();
+
+            await _userManager.UpdateAsync(user);
+
+            return true;
+        }
 
         //SignUp
         public async Task<AuthResponse> SignUpAsync(SignUp model, string origin)
@@ -185,7 +274,7 @@ namespace Infra.Data.Identity.Services
             var roles = await _userManager.GetRolesAsync(user);
 
 
-                var jwtSecurityToken = await CreateJwtAsync(user, roles);
+                var jwtSecurityToken = await CreateJwtAsync(user);
 
                 auth.Id = user.Id;
                 auth.Email = user.Email;
@@ -196,7 +285,26 @@ namespace Infra.Data.Identity.Services
                 auth.TokenExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();
                 auth.Message = "Login Succeeded ";
 
-                return auth;
+
+            //check if the user has any active refresh token
+            if (user.RefreshTokens.Any(t => t.IsActive))
+            {
+                var activeRefreshToken = user.RefreshTokens.FirstOrDefault(t => t.IsActive);
+                auth.RefreshToken = activeRefreshToken.Token;
+                auth.RefreshTokenExpiration = activeRefreshToken.ExpireOn;
+            }
+            else
+            //in case user has no active refresh token
+            {
+                var newRefreshToken = GenerateRefreshToken();
+                auth.RefreshToken = newRefreshToken.Token;
+                auth.RefreshTokenExpiration = newRefreshToken.ExpireOn;
+
+                user.RefreshTokens.Add(newRefreshToken);
+                await _userManager.UpdateAsync(user);
+            }
+
+            return auth;
             }
            
 

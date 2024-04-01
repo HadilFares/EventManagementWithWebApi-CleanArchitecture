@@ -3,6 +3,9 @@ using System.ComponentModel;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 using Stripe;
+using Application.Dtos.Account;
+
+
 
 namespace Domain.Entities
 {
@@ -17,6 +20,7 @@ namespace Domain.Entities
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
+        public List<RefreshToken>? RefreshTokens { get; set; }
 
         // public Guid? AccountId { get; set; }
         public  Subscription? Subscription { get; set; }
