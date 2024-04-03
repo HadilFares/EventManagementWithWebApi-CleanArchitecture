@@ -1,9 +1,14 @@
 ﻿using Application.Dtos.Account;
+using Application.Interfaces.UserRepository;
 using Domain.Entities;
+using Infrastructure.Context;
+using MailKit.BounceMail;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
 {
@@ -12,44 +17,29 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
     public class UserController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
+        private readonly EventlyDbContext _context;
+        private readonly IUserService _userService;
 
-        public UserController(UserManager<User> userManager)
+        public UserController(UserManager<User> userManager, IUserService userService)
         {
             _userManager = userManager;
+            _userService = userService;
         }
 
         [HttpPost("CreateUser")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateUser([FromBody] UserDTO userDTO)
+        public async Task<IActionResult> CreateUser([FromBody] SignUp model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var user = new User
-                {
-                    FirstName = userDTO.FirstName,
-                    LastName = userDTO.LastName,
-                    Email = userDTO.Email,
-                    UserName=userDTO.Username,
-                    PhoneNumber=userDTO.Number,
-                    PasswordHash=userDTO.Password
-                    // Set other properties as needed
-                };
+                return BadRequest("Invalid model data");
+            }
+            var origin = Request.Headers["origin"];
+            var result= await _userService.AddUser(model, origin);
 
-                var result = await _userManager.CreateAsync(user, userDTO.Password);
-                if (result.Succeeded)
-                {
-                    return Ok(user);
-                }
-                else
-                {
-                    return BadRequest(result.Errors);
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(result);
         }
+
 
         [HttpGet("{id}")]
 
@@ -101,7 +91,18 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
             return Ok(userDTOs);
         }
 
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            
+           
 
+
+
+
+            return Ok(new { message = "Logout successful" });
+        }
 
 
 

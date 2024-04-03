@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Dtos.Account;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Application.Interfaces.UserRepository
     public interface IUserService
     {
         Task<List<string>> GetUserRolesAsync(User user);
-        
+        Task<AuthResponse> AddUser(SignUp model, string orgin);
+
     }
 }
