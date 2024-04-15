@@ -23,7 +23,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
       
         [HttpGet]
         [Route("GetPendingAccounts")]
-        [Authorize(Roles = "Admin")]
+         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetPendingAccounts()
         {
             var pendingAccounts = await _accountService.GetPendingOrganizerAndParticipantAccountsAsync();
@@ -32,15 +32,15 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
 
         [HttpGet]
         [Route("GetPendingExhibitorsAccounts")]
-        [Authorize(Roles = "Organizer")]
+       // [Authorize(Roles = "Organizer")]
         public async Task<IActionResult> GetPendingExhibitorsAccounts()
         {
             var pendingAccounts = await _accountService.GetPendingExhibitorAccountsAsync();
             return Ok(pendingAccounts);
         }
 
-        [HttpPut("{id}/status/{status}")]
-        [Authorize(Roles = "Admin")]
+       [HttpPut("{id}/status/{status}")]
+       [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAccountStatus(Guid id, AccountStatus status)
         {
             var result = await _accountService.UpdateAccountStatusAsync(id, status);
@@ -53,7 +53,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
         
         [HttpGet]
         [Route("GetAccount/{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAccount(Guid id)
         {
             var account = await _accountService.Get(id);
@@ -66,7 +66,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
 
         [HttpGet]
         [Route("GetAllAccounts")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAccount()
         {
             var account = await _accountService.GetAll();

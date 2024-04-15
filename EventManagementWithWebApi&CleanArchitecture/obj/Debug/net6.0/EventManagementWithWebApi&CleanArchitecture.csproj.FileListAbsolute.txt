@@ -97,13 +97,6 @@ D:\CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\EventManagement
 D:\CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
 D:\CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Application.dll
 D:\CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Application.pdb
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.csproj.AssemblyReference.cache
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.AssemblyInfoInputs.cache
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.AssemblyInfo.cs
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.csproj.CoreCompileInputs.cache
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.sourcelink.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\appsettings.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.exe
@@ -124,6 +117,8 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.Build.dll
@@ -182,6 +177,7 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\MimeKit.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Mono.TextTemplating.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\NuGet.Common.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\NuGet.Configuration.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
@@ -194,6 +190,7 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\SQLitePCLRaw.batteries_v2.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\SQLitePCLRaw.core.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Stripe.net.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -402,6 +399,14 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Infra.Data.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Application.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Domain.pdb
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.sourcelink.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\staticwebassets\msbuild.EventManagementWithWebApi&CleanArchitecture.Microsoft.AspNetCore.StaticWebAssets.props
@@ -416,8 +421,3 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventMana
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.genruntimeconfig.cache
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\ref\EventManagementWithWebApi&CleanArchitecture.dll
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\obj\Debug\net6.0\EventManagementWithWebApi&CleanArchitecture.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Stripe.net.dll
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\EventManagementWithWebApi&CleanArchitecture\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

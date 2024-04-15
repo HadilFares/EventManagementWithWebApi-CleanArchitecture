@@ -3,7 +3,9 @@ using Application.Dtos.Event;
 using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.EventRepository;
 using Domain.Entities;
+using Infra.Data.Identity.Roles;
 using Infra.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -15,18 +17,53 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
     public class EventController : ControllerBase
     {
         IEventService _eventRepository;
-        public EventController(IEventService eventRepository)
+        ICategoryService _categoryService;
+        public EventController(IEventService eventRepository,ICategoryService categoryService)
         {
             _eventRepository = eventRepository;
+            _categoryService= categoryService;
         }
 
         [HttpGet]
         [Route("GetAllEvents")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetAllEvents()
+        //[Authorize(Roles = "Organizer")]
+
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllEvents()
         {
             var events = await _eventRepository.GetAll();
-            return events;
+            var eventsWithCategoryName = new List<EventDTO>();
+
+            foreach (var e in events)
+            {
+                // Get the category name based on the category ID
+                var categoryName = await _categoryService.GetCategoryById(e.CategoryId.Value);
+
+                // Create the EventDTO and populate its properties
+                var eventDto = new EventDTO
+                { 
+                    
+                    Id=e.Id,
+                    Name = e.Name,
+                    Description = e.Description,
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
+                    Type = e.Type,
+                    Location = e.Location,
+                    Price = e.Price,
+                    NbStand = e.NbStand,
+                    OrganizerId = e.UserId,
+                    CategoryName = categoryName, // Assign the retrieved category name
+                };
+
+                // Add the EventDTO to the list
+                eventsWithCategoryName.Add(eventDto);
+            }
+
+            return eventsWithCategoryName;
         }
+
         [HttpGet("validated")]
         public async Task<ActionResult<IEnumerable<Event>>> GetAllValidatedEvents()
         {
@@ -36,6 +73,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
 
 
         [HttpPut("{id}/validate")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ValidateEvent(Guid id)
         {
             var existingEvent = await _eventRepository.Get(id);
@@ -90,16 +128,19 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             {
                 return NotFound();
             }
+            var newcategoryid = await _categoryService.GetCategoryByName(eventDto.CategoryName);
 
             existingEvent.Name = eventDto.Name;
             existingEvent.Description = eventDto.Description;
             existingEvent.Type = eventDto.Type;
             existingEvent.Price = eventDto.Price;
-            existingEvent.CategoryId = eventDto.CategoryId;
-            existingEvent.Date = eventDto.Date;
+            existingEvent.CategoryId = newcategoryid;
+            existingEvent.StartDate = eventDto.StartDate;
+            existingEvent.EndDate = eventDto.EndDate;
+            existingEvent.StartTime = eventDto.StartTime;
+            existingEvent.EndTime = eventDto.EndTime;
             existingEvent.Location = eventDto.Location;
             existingEvent.NbStand = eventDto.NbStand;
-            existingEvent.Ratings = eventDto.Ratings;
             existingEvent.IsValidated = false;
 
 
@@ -119,6 +160,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
                 return BadRequest(ModelState);
             }
 
+            var categoryId = await _categoryService.GetCategoryByName(eventDto.CategoryName);
             var NewEvent = new Event
         {
             Name = eventDto.Name,
@@ -126,11 +168,13 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             Description = eventDto.Description,
             Type=eventDto.Type,
             Price=eventDto.Price,
-            CategoryId=eventDto.CategoryId,
-            Date=eventDto.Date,
+            CategoryId= categoryId,
+            StartDate=eventDto.StartDate,
+            EndDate = eventDto.EndDate,
+            StartTime = eventDto.StartTime,
+            EndTime = eventDto.EndTime,
             Location = eventDto.Location,
             NbStand =eventDto.NbStand,
-            Ratings= eventDto.Ratings
     };
 
     _eventRepository.Create(NewEvent);

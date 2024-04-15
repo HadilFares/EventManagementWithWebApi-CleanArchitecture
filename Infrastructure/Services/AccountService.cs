@@ -8,6 +8,7 @@ using Infra.Data.BaseRepository;
 using Infrastructure.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Infra.Data.Services
@@ -38,7 +39,7 @@ namespace Infra.Data.Services
             // Update user information
             user.FirstName = userUpdateDTO.FirstName;
             user.LastName = userUpdateDTO.LastName;
-            user.PhoneNumber = userUpdateDTO.Number;
+            user.PhoneNumber = userUpdateDTO.PhoneNumber;
             try
             {
                 await _context.SaveChangesAsync();
@@ -50,37 +51,55 @@ namespace Infra.Data.Services
             }
         }
 
-
-        public async Task<List<Account>> GetPendingOrganizerAndParticipantAccountsAsync()
+        public async Task<List<(Account account, string role)>> GetPendingOrganizerAndParticipantAccountsAsync()
         {
 
             var organizers = await _userManager.GetUsersInRoleAsync("Organizer");
             var participants = await _userManager.GetUsersInRoleAsync("Participant");
-            // Combine the lists of users with these roles
-            var organizersAndParticipants = organizers.Concat(participants);  
-            // Retrieve pending accounts associated with the organizers and participants
-            var pendingAccounts = organizersAndParticipants
-                .Select(user => user.Account)
-                .Where(account => account.Status == AccountStatus.Pending)
-                .ToList();
 
-            return pendingAccounts;
+            // Get the IDs of the organizer and participant users
+            var organizerUserIds = organizers.Select(u => u.Id).ToList();
+            var participantUserIds = participants.Select(u => u.Id).ToList();
 
+            var allPendingAccounts = new List<(Account account, string role)>();
+            foreach (var organizer in organizers)
+            {
+                var organizerAccounts = await _context.Accounts
+                    .Include(a => a.User)
+                    .Where(a => a.UserId == organizer.Id && a.Status == AccountStatus.Pending)
+                    .ToListAsync();
+
+                allPendingAccounts.AddRange(organizerAccounts.Select(account => (account, "Organizer")));
+            }
+
+            foreach (var participant in participants)
+            {
+                var participantAccounts = await _context.Accounts
+                    .Include(a => a.User)
+                    .Where(a => a.UserId == participant.Id && a.Status == AccountStatus.Pending)
+                    .ToListAsync();
+
+                allPendingAccounts.AddRange(participantAccounts.Select(account => (account, "Participant")));
+            }
+
+            return allPendingAccounts;
 
         }
-
+        
 
         public async Task<List<Account>> GetPendingExhibitorAccountsAsync()
         {
-            var Exhibitors = await _userManager.GetUsersInRoleAsync("Exhibitor");
-            // Combine the lists of users with these roles
-     
-            // Retrieve pending accounts associated with the organizers and participants
-            var pendingAccounts = Exhibitors
-                .Select(user => user.Account)
-                .Where(account => account.Status == AccountStatus.Pending)
-                .ToList();
+         
+            var organizers = await _userManager.GetUsersInRoleAsync("Exhibitor");
 
+            // Get the IDs of the organizer users
+            var organizerUserIds = organizers.Select(u => u.Id).ToList();
+
+            // Retrieve the accounts for the organizer users with a "Pending" status
+            var pendingAccounts = await _context.Accounts
+                .Include(a => a.User) // Include User navigation property to avoid additional queries
+                .Where(a => organizerUserIds.Contains(a.UserId) && a.Status == AccountStatus.Pending)
+                .ToListAsync();
             return pendingAccounts;
         }
 

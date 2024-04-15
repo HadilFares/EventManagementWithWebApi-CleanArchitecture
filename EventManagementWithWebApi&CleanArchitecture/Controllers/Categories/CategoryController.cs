@@ -71,12 +71,12 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
         [Route("GetCatagoryById/{id}")]
         public async Task<IActionResult> GetCatagoryById(Guid id)
         {
-            var course = await _categoryRepository.Get(id);
-            if (course == null)
+            var category = await _categoryRepository.Get(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            return Ok(course);
+            return Ok(category);
         }
 
 
@@ -120,7 +120,17 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
 
             return Ok(categories);
         }
+        [HttpGet("GetCategoryByName/{name}")]
+        public async Task<IActionResult> GetCategoryByName(string name)
+        {
+            var category = await _categoryRepository.GetCategoryByName(name);
+            if (category==Guid.Empty)
+            {
+                return NotFound();
+            }
 
+            return Ok(category);
+        }
 
     }
 }

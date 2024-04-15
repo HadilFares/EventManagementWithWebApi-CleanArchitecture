@@ -55,7 +55,7 @@ namespace Infra.Data.Services
                     LastName = model.LastName,
                     UserName = model.Username,
                     Email = model.Email,
-                    PhoneNumber = model.Number,
+                    PhoneNumber = model.PhoneNumber,
 
                 };
 
@@ -86,11 +86,11 @@ namespace Infra.Data.Services
 
 
                 // Assign the user to the role
-                var roleExists = await _roleManager.RoleExistsAsync(model.Role);
+                /*var roleExists = await _roleManager.RoleExistsAsync(model.Role);
                 if (!roleExists)
                 {
                     return new AuthResponse { Message = "Role does not exist" };
-                }
+                }*/
 
                 await _userManager.AddToRoleAsync(user, model.Role);
 
@@ -105,6 +105,7 @@ namespace Infra.Data.Services
                 auth.Email = user.Email;
                 auth.UserName = user.UserName;
                 auth.Message = "SignUp Succeeded";
+                auth.Id= user.Id;
                 return auth;
             }
 

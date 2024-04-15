@@ -26,5 +26,24 @@ namespace Infra.Data.Services
                   .Where(c => c.OrganizerId == userId)
                   .ToListAsync();
         }
+
+        public async Task<String> GetCategoryById(Guid id)
+        {
+            return await _context.Categories
+                .Where(c=> c.Id==id)
+                .Select(c=>c.Name)
+                .FirstOrDefaultAsync();
+
+        }
+
+        public async Task<Guid> GetCategoryByName(string name)
+        {
+            Guid categoryId = await _context.Categories
+                .Where(c => c.Name == name)
+                .Select(c => c.Id)
+                 .FirstOrDefaultAsync();
+
+            return categoryId;
+        }
     }
 }

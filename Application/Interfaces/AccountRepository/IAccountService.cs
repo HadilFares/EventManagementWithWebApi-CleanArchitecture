@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.Account;
+
 using Application.Interfaces.IBaseRepository;
 using Domain.Entities;
 using System;
@@ -12,7 +13,7 @@ namespace Application.Interfaces.AccountRepository
     public interface IAccountService:IBaseRepository<Account>
     {
         
-        Task<List<Account>> GetPendingOrganizerAndParticipantAccountsAsync();
+        Task<List<(Account account, string role)>> GetPendingOrganizerAndParticipantAccountsAsync();
         Task<List<Account>> GetPendingExhibitorAccountsAsync();
         Task<bool> UpdateAccountStatusAsync(Guid accountId, AccountStatus status);
         Task  <bool>EditProfile(UserDTO userUpdateDTO);

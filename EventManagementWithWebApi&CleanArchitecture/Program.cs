@@ -29,6 +29,7 @@ using Stripe;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Microsoft.OpenApi.Any;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -131,6 +132,19 @@ builder.Services.AddSwaggerGen(option =>
         Type = SecuritySchemeType.ApiKey,
         BearerFormat = "JWT",
         Scheme = "Bearer"
+    });
+    option.MapType<TimeSpan>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "time",
+        Pattern = @"^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$", // Custom pattern for time format
+        Example = new OpenApiString(DateTime.Now.ToString("HH:mm"))
+    });
+    option.MapType<DateTime>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "date",
+        Example = new OpenApiString(DateTime.Today.ToString("yyyy-MM-dd")) // Presenting date only
     });
     option.AddSecurityRequirement(new OpenApiSecurityRequirement
     {

@@ -11,5 +11,8 @@ namespace Application.Interfaces.CategoryRepository
     public interface ICategoryService:IBaseRepository<Category>
     {
         Task<List<Category>> GetCategoriesByUserId(string userId);
+        Task<Guid> GetCategoryByName(string name);
+        Task<String> GetCategoryById(Guid id);
+      
     }
 }

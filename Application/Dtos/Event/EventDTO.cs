@@ -10,16 +10,33 @@ namespace Application.Dtos.Event
 {
     public class EventDTO
     {
+
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Please enter the Name of Event.")]
         [MaxLength(50)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter the Description of Event.")]
         [MaxLength(150)]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Please enter the Date of Event.")]
-        [Display(Name = "Date of Event")]
+      
+        [Required(ErrorMessage = "Please enter the Start  Date of Event.")]
+        [Display(Name = " Start Date of Event")]
         [DataType(DataType.Date)]
-        public DateTime? Date { get; set; }
+        public DateTime StartDate { get; set; }
+
+        [Required(ErrorMessage = "Please enter the End Date of Event.")]
+        [Display(Name = "End  Date of Event")]
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+
+        [Required(ErrorMessage = "Please enter the Start Date of Event.")]
+        [Display(Name = "Start  Date of Event")]
+        [DataType(DataType.Time)]
+        public TimeSpan StartTime { get; set; }
+        [Required(ErrorMessage = "Please enter the End Time of Event.")]
+        [Display(Name = "End Time  of Event")]
+        [DataType(DataType.Time)]
+        public TimeSpan? EndTime { get; set; }
         [Required(ErrorMessage = "Please select the Type of Event.")]
         public string Type { get; set; }
         [Required(ErrorMessage = "Please enter the Location of Event.")]
@@ -32,7 +49,7 @@ namespace Application.Dtos.Event
         [Required]
         public string OrganizerId { get; set; }
         [Required]
-        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
         
     }
 }

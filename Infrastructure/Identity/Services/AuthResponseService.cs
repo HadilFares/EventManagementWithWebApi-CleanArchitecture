@@ -33,7 +33,8 @@ namespace Infra.Data.Identity.Services
         private readonly IEmailService _emailSender;
         private readonly IStripeService _stripeService;
         private readonly JWT _Jwt;
-        public AuthResponseService(IEmailService emailSender,IStripeService stripeService, IOptions<JWT> jwt, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, EventlyDbContext context)
+        public JWT _JWTSettings { get; }
+        public AuthResponseService(IOptions<JWT> JwtSettings, IEmailService emailSender,IStripeService stripeService, IOptions<JWT> jwt, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, EventlyDbContext context)
         {
             _userManager = userManager;
             _context = context;
@@ -41,11 +42,40 @@ namespace Infra.Data.Identity.Services
             _emailSender = emailSender;
             _stripeService= stripeService;
             _Jwt = jwt.Value;
+            _JWTSettings = JwtSettings.Value;
         }
 
+        public async Task<ClaimsPrincipal> DecodeJwtTokenAsync(string token)
+        {
+            var key = Encoding.UTF8.GetBytes(_JWTSettings.Key);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = _JWTSettings.Issuer,
+                ValidateAudience = true,
+                ValidAudience = _JWTSettings.Audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero // Adjust as needed
+            };
 
+            try
+            {
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+                return principal;
+            }
+            catch (Exception ex)
+            {
+                // Token validation failed
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+    
 
-        private async Task<JwtSecurityToken> CreateJwtAsync(User user)
+    private async Task<JwtSecurityToken> CreateJwtAsync(User user)
         {
             var symmetricSecurityKey =
           new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Jwt.Key));
@@ -68,7 +98,7 @@ namespace Infra.Data.Identity.Services
          issuer: _Jwt.Issuer,
          audience: _Jwt.Audience,
          claims: claims,
-         expires: DateTime.Now.AddMinutes(_Jwt.DurationInDays),
+         expires: DateTime.Now.AddMinutes(120),
          signingCredentials: signingCredentials
         );
 
@@ -76,7 +106,7 @@ namespace Infra.Data.Identity.Services
         }
 
         //Generate RefreshToken
-        private RefreshToken GenerateRefreshToken()
+     /*   private RefreshToken GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
 
@@ -90,8 +120,8 @@ namespace Infra.Data.Identity.Services
                 ExpireOn = DateTime.UtcNow.AddDays(10),
                 CreateOn = DateTime.UtcNow
             };
-        }
-        public async Task<AuthResponse> RefreshTokenCheckAsync(string token)
+        }*/
+      /*  public async Task<AuthResponse> RefreshTokenCheckAsync(string token)
         {
             var auth = new AuthResponse();
 
@@ -137,10 +167,10 @@ namespace Infra.Data.Identity.Services
 
             return auth;
         }
-
+      */
         
 
-        //revoke Refresh token
+      /*  //revoke Refresh token
         public async Task<bool> RevokeTokenAsync(string token)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
@@ -163,7 +193,7 @@ namespace Infra.Data.Identity.Services
 
             return true;
         }
-
+      */
         //SignUp
         public async Task<AuthResponse> SignUpAsync(SignUp model, string origin)
         {
@@ -186,7 +216,7 @@ namespace Infra.Data.Identity.Services
                 LastName = model.LastName,
                 UserName = model.Username,
                 Email = model.Email,
-                PhoneNumber = model.Number,
+                PhoneNumber = model.PhoneNumber,
            
         };
            
@@ -287,7 +317,7 @@ namespace Infra.Data.Identity.Services
 
 
             //check if the user has any active refresh token
-            if (user.RefreshTokens.Any(t => t.IsActive))
+           /* if (user.RefreshTokens.Any(t => t.IsActive))
             {
                 var activeRefreshToken = user.RefreshTokens.FirstOrDefault(t => t.IsActive);
                 auth.RefreshToken = activeRefreshToken.Token;
@@ -303,7 +333,7 @@ namespace Infra.Data.Identity.Services
                 user.RefreshTokens.Add(newRefreshToken);
                 await _userManager.UpdateAsync(user);
             }
-
+           */
             return auth;
             }
            
