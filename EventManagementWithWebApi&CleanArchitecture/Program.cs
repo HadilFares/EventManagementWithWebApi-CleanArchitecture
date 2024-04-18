@@ -30,6 +30,7 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Microsoft.OpenApi.Any;
+using Application.Interfaces.TicketRepository;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +61,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IAccountService, Infra.Data.Services.AccountService>();
+builder.Services.AddScoped<ITicketService   ,    Infra.Data.Services.TicketService>();
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
 builder.Services.AddScoped<IEmailService, EmailService>();

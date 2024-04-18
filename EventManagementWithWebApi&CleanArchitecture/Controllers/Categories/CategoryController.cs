@@ -3,6 +3,7 @@ using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.IBaseRepository;
 using Domain.Entities;
 using Infra.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
         }
         [HttpGet]
         [Route("GetAllCategories")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
             var categories = await _categoryRepository.GetAll();
@@ -27,6 +29,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
 
      
         [HttpPost]
+        [Authorize()]
         public async Task<ActionResult> CreateCategory([FromBody] CategoryDTO categoryDto)
         {
             if (!ModelState.IsValid)

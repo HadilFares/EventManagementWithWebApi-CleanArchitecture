@@ -21,6 +21,7 @@ namespace Infrastructure.Context
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Category> Categories { get; set; }
        public DbSet<Event> Events { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
@@ -36,6 +37,12 @@ namespace Infrastructure.Context
             .HasForeignKey<Account>(a => a.UserId)
             .IsRequired();
 
+            //event
+            /*modelBuilder.Entity<Event>()
+           .HasMany(a => a.Tickets)
+           .WithOne(b => b.Event)
+           .HasForeignKey(b => b.EventId)
+           .IsRequired();*/
 
            modelBuilder.Entity<Category>()
           .HasOne(c => c.User) 
@@ -82,10 +89,16 @@ namespace Infrastructure.Context
             .WithOne(b => b.Event)
             .HasForeignKey(b => b.EventId)
               .OnDelete(DeleteBehavior.SetNull);
+            //event-ticket
+
+           modelBuilder.Entity<Event>()
+            .HasMany(a => a.Tickets)
+            .WithOne(b => b.Event)
+            .HasForeignKey(b => b.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
-          
-          //User-Subscription
+            //User-Subscription
             modelBuilder.Entity<User>()
                .HasOne(u => u.Subscription) 
                .WithOne(s => s.User)       

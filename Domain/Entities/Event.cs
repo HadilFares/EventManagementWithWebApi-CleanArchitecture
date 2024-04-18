@@ -57,6 +57,6 @@ namespace Domain.Entities
         public Guid? CategoryId { get; set; }
         public  virtual Category? Category { get; set; }
         public ICollection<Comment>? Comments { get; set; }
-
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

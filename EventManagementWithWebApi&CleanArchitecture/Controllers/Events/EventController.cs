@@ -7,6 +7,7 @@ using Infra.Data.Identity.Roles;
 using Infra.Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 
@@ -18,10 +19,12 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
     {
         IEventService _eventRepository;
         ICategoryService _categoryService;
-        public EventController(IEventService eventRepository,ICategoryService categoryService)
+        private readonly UserManager<User> _userManager;
+        public EventController(UserManager<User> userManager,IEventService eventRepository,ICategoryService categoryService)
         {
             _eventRepository = eventRepository;
             _categoryService= categoryService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -68,12 +71,44 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
         public async Task<ActionResult<IEnumerable<Event>>> GetAllValidatedEvents()
         {
             var events = await _eventRepository.GetAllValidatedEvents();
+            
+
             return Ok(events);
         }
 
+        [HttpGet("Notvalidated")]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllNotValidatedEvents()
+        {
+            var events = await _eventRepository.GetAllNoValidatedEvents();
+            var eventsnoValidated = new List<EventDTO>();
+            foreach (var e in events)
+            {
+                // Get the category name based on the category ID
+                var categoryName = await _categoryService.GetCategoryById(e.CategoryId.Value);
+                var Organizer = await _userManager.FindByIdAsync(e.UserId);
+
+                // Create the EventDTO and populate its properties
+                var eventDto = new EventDTO
+                {
+
+                    Id = e.Id,
+                    Name = e.Name,
+                    Description = e.Description,
+                    Type = e.Type,
+                    Location = e.Location,
+                    OrganizerName = Organizer.FirstName,
+                    OrganizerLastName = Organizer.LastName,
+                    CategoryName = categoryName, // Assign the retrieved category name
+                };
+
+                // Add the EventDTO to the list
+                eventsnoValidated.Add(eventDto);
+            }
+            return eventsnoValidated;
+        }
 
         [HttpPut("{id}/validate")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> ValidateEvent(Guid id)
         {
             var existingEvent = await _eventRepository.Get(id);

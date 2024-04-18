@@ -22,20 +22,25 @@ namespace Application.Dtos.Event
         [Required(ErrorMessage = "Please enter the Start  Date of Event.")]
         [Display(Name = " Start Date of Event")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
         public DateTime StartDate { get; set; }
 
         [Required(ErrorMessage = "Please enter the End Date of Event.")]
         [Display(Name = "End  Date of Event")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "Please enter the Start Date of Event.")]
         [Display(Name = "Start  Date of Event")]
         [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan StartTime { get; set; }
         [Required(ErrorMessage = "Please enter the End Time of Event.")]
         [Display(Name = "End Time  of Event")]
         [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan? EndTime { get; set; }
         [Required(ErrorMessage = "Please select the Type of Event.")]
         public string Type { get; set; }
@@ -50,6 +55,8 @@ namespace Application.Dtos.Event
         public string OrganizerId { get; set; }
         [Required]
         public string CategoryName { get; set; }
-        
+        public string OrganizerName { get; set; }
+        public string OrganizerLastName { get; set; }
+
     }
 }

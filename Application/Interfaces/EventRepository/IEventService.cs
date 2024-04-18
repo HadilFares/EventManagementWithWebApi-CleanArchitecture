@@ -14,5 +14,6 @@ namespace Application.Interfaces.EventRepository
         Task<List<Event>> GetEventsByOrganizerId(string OrganizerId);
         Task<List<Event>> GetEventsByCatagoryId(Guid categoryId);
         Task<IEnumerable<Event>> GetAllValidatedEvents();
+        Task<IEnumerable<Event>> GetAllNoValidatedEvents();
     }
 }

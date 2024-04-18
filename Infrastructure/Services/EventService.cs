@@ -21,6 +21,11 @@ namespace Infra.Data.Services
 
         }
 
+        public async Task<IEnumerable<Event>> GetAllNoValidatedEvents()
+        {
+            return await _context.Events.Where(e => !e.IsValidated).ToListAsync();
+        }
+
         public async Task<IEnumerable<Event>> GetAllValidatedEvents()
         {
             return await _context.Events.Where(e => e.IsValidated).ToListAsync();
