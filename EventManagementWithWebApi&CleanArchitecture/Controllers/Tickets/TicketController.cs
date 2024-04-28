@@ -26,7 +26,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Tickets
         //[Authorize]
         public async Task<IActionResult> GetTicketByEventId(Guid id)
         {
-            var ticket = await _ticketservice.FindByConditionAsync(ticket => ticket.EventId == id);
+            var ticket = await _ticketservice.GetTicketByEventId(id);
             if (ticket != null)
             {
                 return Ok(ticket);
@@ -40,7 +40,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Tickets
         //[Authorize]
         public async Task<IActionResult> GetTicket(Guid id)
         {
-            var ticket = await _ticketservice.Get(id);
+            var ticket = await _ticketservice.GetTicket(id);
             if (ticket != null)
             {
                 return Ok(ticket);
@@ -75,16 +75,54 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Tickets
 
             };
 
-            _ticketservice.Create(ticket);
-            await _ticketservice.SaveChangesAsync();
+            _ticketservice.CreateTicket(ticket);
+   
 
             return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(Guid id)
+
+
+
+        [HttpPut("{id}")]
+        //[Authorize()]
+        public async Task<ActionResult> UpdateTicket(Guid id, [FromBody] TicketDTO ticketDTO)
         {
-            var deleted = await _ticketservice.Delete(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            // var Event = await _eventService.Get(ticketDTO.EventId);
+
+
+
+            var ticket = new Ticket
+            {
+                Name = ticketDTO.Name,
+                EventId = ticketDTO.EventId,
+                EndDate = ticketDTO.EndDate,
+                StartTime = ticketDTO.StartTime,
+                EndTime = ticketDTO.EndTime,
+                Location = ticketDTO.Location,
+                Price = ticketDTO.Price,
+                StartDate = ticketDTO.StartDate,
+                Ticketcolor = ticketDTO.TicketColor
+
+            };
+
+            _ticketservice.UpdateTicket(ticket);
+
+
+            return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTicket(Guid id)
+        {
+            var deleted = await _ticketservice.DeleteTicket(id);
 
             if (!deleted)
             {

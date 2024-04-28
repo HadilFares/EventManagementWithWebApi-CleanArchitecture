@@ -25,3 +25,5 @@ C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\Applicati
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\Application\obj\Debug\net6.0\refint\Application.dll
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\Application\obj\Debug\net6.0\Application.pdb
 C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\Application\obj\Debug\net6.0\ref\Application.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\Application\bin\Debug\net6.0\Infra.Data.dll
+C:\Users\ASUS\source\repos\EventManagementWithWebApi&CleanArchitecture\Application\bin\Debug\net6.0\Infra.Data.pdb

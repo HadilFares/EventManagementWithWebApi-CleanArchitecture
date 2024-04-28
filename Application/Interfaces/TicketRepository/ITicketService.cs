@@ -8,7 +8,13 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.TicketRepository
 {
-    public interface ITicketService: IBaseRepository<Ticket>
+    public interface ITicketService
     {
+       Task<Ticket> GetTicket(Guid id);
+      Task<Ticket> GetTicketByEventId(Guid eventId);
+        Task<Ticket> CreateTicket(Ticket ticket);
+        Task<Ticket>    UpdateTicket(Ticket ticket);
+        Task<bool> DeleteTicket(Guid id);
+
     }
 }

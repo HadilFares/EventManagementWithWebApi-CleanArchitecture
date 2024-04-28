@@ -11,6 +11,8 @@ namespace Application.Dtos.Event
     public class EventDTO
     {
 
+        public string? OrganizerName { get; set; }
+        public string? OrganizerLastName { get; set; }
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Please enter the Name of Event.")]
         [MaxLength(50)]
@@ -53,10 +55,9 @@ namespace Application.Dtos.Event
         public int Ratings { get; set; }
         [Required]
         public string OrganizerId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter the category of Event.")]
         public string CategoryName { get; set; }
-        public string OrganizerName { get; set; }
-        public string OrganizerLastName { get; set; }
+        
 
     }
 }

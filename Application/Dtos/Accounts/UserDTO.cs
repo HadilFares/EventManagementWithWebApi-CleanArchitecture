@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dtos.Account
+namespace Application.Dtos.Accounts
 {
-   public class UserDTO
+    public class UserDTO
     {
 
 
-       public string Id { get; set; }
-       [Required]
-      
+        public string Id { get; set; }
+        [Required]
+
         public string FirstName { get; set; }
 
         [Required]
@@ -33,7 +33,7 @@ namespace Application.Dtos.Account
         public string Password { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-                [Required]
+        [Required]
         public List<string> Role { get; set; }
 
     }

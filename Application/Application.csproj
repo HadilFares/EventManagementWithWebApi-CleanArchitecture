@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Infra.Data">
+      <HintPath>..\Infrastructure\obj\Debug\net6.0\Infra.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

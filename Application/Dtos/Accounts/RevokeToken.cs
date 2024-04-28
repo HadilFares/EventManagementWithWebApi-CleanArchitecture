@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dtos.Account
+namespace Application.Dtos.Accounts
 {
     public class RevokeToken
     {

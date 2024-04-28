@@ -76,5 +76,9 @@ namespace Infra.Data.BaseRepository
 
         }
 
+        public Task<Category> FindByConditionAsync<Category>(Expression<Func<Category, bool>> predicate) where Category : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }

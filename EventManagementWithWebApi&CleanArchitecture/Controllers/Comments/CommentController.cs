@@ -20,22 +20,22 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Comments
         [HttpPost("{id}/like")]
         public async Task<IActionResult> LikeComment(Guid id)
         {
-            var comment = await _commentRepository.Get(id);
+            var comment = await _commentRepository.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
             }
             comment.Likes++;
 
-            _commentRepository.Update(comment);
-            await _commentRepository.SaveChangesAsync();
+            _commentRepository.UpdateComment(comment);
+
 
             return NoContent();
         }
         [HttpPost("{id}/dislike")]
         public async Task<IActionResult> DislikeComment(Guid id)
         {
-            var comment = await _commentRepository.Get(id);
+            var comment = await _commentRepository.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
@@ -46,8 +46,8 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Comments
                 comment.Likes--;
             }
 
-            _commentRepository.Update(comment);
-            await _commentRepository.SaveChangesAsync();
+            _commentRepository.UpdateComment(comment);
+
 
             return NoContent();
         }
@@ -56,7 +56,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Comments
             [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetCommentById(Guid id)
         {
-            var comment = await _commentRepository.Get(id);
+            var comment = await _commentRepository.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
@@ -83,8 +83,8 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Comments
                
             };
 
-            _commentRepository.Create(comment);
-            await _commentRepository.SaveChangesAsync();
+            _commentRepository.CreateComment(comment);
+
 
             return CreatedAtAction(nameof(GetCommentById), new { id = comment.Id }, comment);
         }
@@ -92,7 +92,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Comments
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateComment(Guid id, [FromBody] CommentDTO commentDto)
         {
-            var existingComment = await _commentRepository.Get(id);
+            var existingComment = await _commentRepository.GetComment(id);
             if (existingComment == null)
             {
                 return NotFound();
@@ -100,22 +100,20 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Comments
 
             existingComment.Text = commentDto.Text;
 
-            _commentRepository.Update(existingComment);
-            await _commentRepository.SaveChangesAsync();
+            _commentRepository.UpdateComment(existingComment);
 
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment(Guid id)
         {
-            var existingComment = await _commentRepository.Get(id);
+            var existingComment = await _commentRepository.GetComment(id);
             if (existingComment == null)
             {
                 return NotFound();
             }
 
-            _commentRepository.Delete(id);
-            await _commentRepository.SaveChangesAsync();
+            _commentRepository.DeleteComment(id);
 
             return NoContent();
         }

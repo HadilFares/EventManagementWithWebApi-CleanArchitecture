@@ -8,7 +8,13 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.CommentRepository
 {
-    public interface ICommentService:IBaseRepository<Comment>
+    public interface ICommentService
     {
+
+        Task<Comment> GetComment(Guid id);
+        Task<Comment> CreateComment(Comment comment);
+        Task<Comment> UpdateComment(Comment comment);
+        Task<bool> DeleteComment(Guid id);
+        Task<List<Comment>> GetAllComments();
     }
 }

@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "EventManagementWithWebApi&CleanArchitecture/1.0.0": {
         "dependencies": {
+          "Application": "1.0.0",
+          "Domain": "1.0.0",
           "Infra.Data": "1.0.0",
           "MailKit": "4.4.0",
           "MailKit.NET": "2.0.0",

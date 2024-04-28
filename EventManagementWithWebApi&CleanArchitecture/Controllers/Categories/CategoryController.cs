@@ -2,10 +2,11 @@
 using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.IBaseRepository;
 using Domain.Entities;
-using Infra.Data.Services;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
 {
@@ -13,23 +14,32 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        // IBaseRepository<Category> _categoryRepository;
         ICategoryService _categoryRepository;
         public CategoryController(ICategoryService categoryRepository ) {
             _categoryRepository=categoryRepository;
         }
         [HttpGet]
         [Route("GetAllCategories")]
-        [Authorize]
+      //  [Authorize]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _categoryRepository.GetAllCategories();
             return categories;
         }
 
-     
+        [HttpGet]
+        [Route("GetAllNamesCategories")]
+        //  [Authorize]
+        public async Task<ActionResult<List<String>>> GetAllNameCategories()
+        {
+            var categories = await _categoryRepository.GetAllNamesCategories();
+            return categories;
+        }
+
+
+
         [HttpPost]
-        [Authorize()]
+        //[Authorize()]
         public async Task<ActionResult> CreateCategory([FromBody] CategoryDTO categoryDto)
         {
             if (!ModelState.IsValid)
@@ -37,8 +47,8 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
                 return BadRequest(ModelState);
             }
 
-            var existingCategory = await _categoryRepository.FindByConditionAsync(c => c.Name == categoryDto.Name);
-            if (existingCategory != null)
+            var existingCategory = await _categoryRepository.GetCategoryByName(categoryDto.Name);
+            if (existingCategory != Guid.Empty)
             {
                 // If a category with the same name exists, return a conflict response
                 return Conflict("A category with the same name already exists.");
@@ -52,8 +62,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
                 OrganizerId = categoryDto.UserId
             };
 
-            _categoryRepository.Create(category);
-            await _categoryRepository.SaveChangesAsync();
+            _categoryRepository.CreateCategory(category);
 
             return CreatedAtAction(nameof(GetCatagoryById), new { id = category.Id }, category);
         }
@@ -61,7 +70,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
-            var deleted = await _categoryRepository.Delete(id);
+            var deleted = await _categoryRepository.DeleteCategory(id);
 
             if (!deleted)
             {
@@ -74,7 +83,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
         [Route("GetCatagoryById/{id}")]
         public async Task<IActionResult> GetCatagoryById(Guid id)
         {
-            var category = await _categoryRepository.Get(id);
+            var category = await _categoryRepository.GetCategoryById(id);
             if (category == null)
             {
                 return NotFound();
@@ -87,26 +96,26 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
         public async Task<IActionResult> UpdateCategory(Guid id ,[FromBody] CategoryDTO categoryDto)
         {
           
-            var existingCategory = await _categoryRepository.Get(id);
+            var existingCategory = await _categoryRepository.GetCategory(id);
             if (existingCategory == null)
             {
                 return NotFound();
             }
 
-             // Check if the new name already exists for a different category
-    var categoryWithSameName = await _categoryRepository.FindByConditionAsync(c => c.Name == categoryDto.Name && c.Id != id);
-    if (categoryWithSameName != null)
-    {
-        return Conflict("A category with the same name already exists.");
-    }
+            var existingNameCategory = await _categoryRepository.GetCategoryByName(categoryDto.Name);
+            if (existingNameCategory != Guid.Empty)
+            {
+                // If a category with the same name exists, return a conflict response
+                return Conflict("A category with the same name already exists.");
+            }
 
 
 
             existingCategory.Name = categoryDto.Name;
            
 
-            _categoryRepository.Update(existingCategory);
-            await _categoryRepository.SaveChangesAsync();
+            _categoryRepository.UpdateCategory(existingCategory);
+       
 
             return NoContent();
         
@@ -129,7 +138,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
             var category = await _categoryRepository.GetCategoryByName(name);
             if (category==Guid.Empty)
             {
-                return NotFound();
+                return NotFound("Category doesn't exist");
             }
 
             return Ok(category);

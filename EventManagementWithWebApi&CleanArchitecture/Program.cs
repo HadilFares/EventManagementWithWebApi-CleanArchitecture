@@ -9,12 +9,12 @@ using Infra.Data.Identity.Seeds;
 using Infra.Data.Identity.Services;
 using Application.Interfaces.Email;
 using Domain.Settings;
-using Infra.Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Application.Interfaces.IBaseRepository;
 using Infra.Data.BaseRepository;
+using Infra.Data.ExterneServices;
 using Application.Interfaces.AccountRepository;
 using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.EventRepository;
@@ -31,6 +31,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Microsoft.OpenApi.Any;
 using Application.Interfaces.TicketRepository;
+using Application.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,16 +61,16 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-builder.Services.AddScoped<IAccountService, Infra.Data.Services.AccountService>();
-builder.Services.AddScoped<ITicketService   ,    Infra.Data.Services.TicketService>();
+builder.Services.AddScoped<IAccountService, Application.Services.AccountService>();
+builder.Services.AddScoped<ITicketService   , TicketService>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAuthResponse, AuthResponseService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IEventService, Infra.Data.Services.EventService>();
+builder.Services.AddScoped<IEventService, Application.Services.EventService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IStripeService, StripeService>();
-builder.Services.AddScoped<ISubscriptionService, Infra.Data.Services.SubscriptionService>();
+builder.Services.AddScoped<ISubscriptionService, Application.Services.SubscriptionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));

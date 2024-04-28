@@ -5,11 +5,11 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Application.Dtos.Account
+namespace Application.Dtos.Accounts
 {
     public class AuthResponse
     {
-        public string Id {  get; set; }
+        public string Id { get; set; }
         public string? Message { get; set; }
 
         //by default false

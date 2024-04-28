@@ -9,9 +9,8 @@ namespace Application.Dtos.Category
 {
     public class CategoryDTO
     {
-        [Required]
+        
         public string Name { get; set; }
-        [Required]
         public string UserId {  get; set; }
     }
 }

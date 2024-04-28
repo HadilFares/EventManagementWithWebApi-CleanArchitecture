@@ -4,7 +4,6 @@ using Application.Interfaces.CategoryRepository;
 using Application.Interfaces.EventRepository;
 using Domain.Entities;
 using Infra.Data.Identity.Roles;
-using Infra.Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -33,7 +32,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
 
         public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllEvents()
         {
-            var events = await _eventRepository.GetAll();
+            var events = await _eventRepository.GetAllEvents();
             var eventsWithCategoryName = new List<EventDTO>();
 
             foreach (var e in events)
@@ -111,7 +110,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> ValidateEvent(Guid id)
         {
-            var existingEvent = await _eventRepository.Get(id);
+            var existingEvent = await _eventRepository.GetEvent(id);
             if (existingEvent == null)
             {
                 return NotFound();
@@ -119,8 +118,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
 
             existingEvent.IsValidated = true;
 
-            _eventRepository.Update(existingEvent);
-            await _eventRepository.SaveChangesAsync();
+            _eventRepository.UpdateEvent(existingEvent);
 
             return NoContent();
         }
@@ -131,7 +129,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
         [Route("GetEventById/{id}")]
         public async Task<IActionResult> GetEventById(Guid id)
         {
-            var course = await _eventRepository.Get(id);
+            var course = await _eventRepository.GetEvent(id);
             if (course == null)
             {
                 return NotFound();
@@ -144,7 +142,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(Guid id)
         {
-            var deleted = await _eventRepository.Delete(id);
+            var deleted = await _eventRepository.DeleteEvent(id);
 
             if (!deleted)
             {
@@ -158,7 +156,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
         public async Task<IActionResult> UpdateEvent(Guid id, [FromBody] EventDTO eventDto)
         {
 
-            var existingEvent = await _eventRepository.Get(id);
+            var existingEvent = await _eventRepository.GetEvent(id);
             if (existingEvent == null)
             {
                 return NotFound();
@@ -179,8 +177,8 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             existingEvent.IsValidated = false;
 
 
-            _eventRepository.Update(existingEvent);
-            await _eventRepository.SaveChangesAsync();
+            _eventRepository.UpdateEvent(existingEvent);
+         
 
             return NoContent();
 
@@ -210,10 +208,11 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             EndTime = eventDto.EndTime,
             Location = eventDto.Location,
             NbStand =eventDto.NbStand,
+       
     };
 
-    _eventRepository.Create(NewEvent);
-    await _eventRepository.SaveChangesAsync();
+    _eventRepository.CreateEvent(NewEvent);
+
       return CreatedAtAction(nameof(GetEventById), new { id = NewEvent.Id }, NewEvent);
 
 

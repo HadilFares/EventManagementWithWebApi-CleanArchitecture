@@ -1,4 +1,4 @@
-﻿using Application.Dtos.Account;
+﻿using Application.Dtos.Accounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

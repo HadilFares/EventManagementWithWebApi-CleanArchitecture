@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dtos.Account
+namespace Application.Dtos.Accounts
 {
-   public class SignUp
+    public class SignUp
     {
         [Required]
-      
+
         public string FirstName { get; set; }
 
         [Required]
@@ -31,6 +31,6 @@ namespace Application.Dtos.Account
         [Required]
         public string Role { get; set; }
         [Required]
-        public string PhoneNumber {  get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

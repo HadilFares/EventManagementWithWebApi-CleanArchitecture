@@ -56,7 +56,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAccount(Guid id)
         {
-            var account = await _accountService.Get(id);
+            var account = await _accountService.GetAccount(id);
             if (account != null)
             {
                 return Ok(account);
@@ -69,7 +69,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Account
        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAccount()
         {
-            var account = await _accountService.GetAll();
+            var account = await _accountService.GetAllAccounts();
             if (account != null)
             {
                 return Ok(account);

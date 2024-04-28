@@ -17,7 +17,8 @@
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.28",
           "MimeKit": "4.4.0",
           "Newtonsoft.Json": "13.0.3",
-          "Stripe.net": "43.20.0"
+          "Stripe.net": "43.20.0",
+          "Infra.Data": "1.0.0.0"
         },
         "runtime": {
           "Application.dll": {}
@@ -992,6 +993,14 @@
         "runtime": {
           "Domain.dll": {}
         }
+      },
+      "Infra.Data/1.0.0.0": {
+        "runtime": {
+          "Infra.Data.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -1682,6 +1691,11 @@
     },
     "Domain/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Infra.Data/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

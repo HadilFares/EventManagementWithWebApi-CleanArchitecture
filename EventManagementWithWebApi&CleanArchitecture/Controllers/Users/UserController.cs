@@ -1,4 +1,4 @@
-﻿using Application.Dtos.Account;
+﻿using Application.Dtos.Accounts;
 using Application.Interfaces.UserRepository;
 using Domain.Entities;
 using Infrastructure.Context;

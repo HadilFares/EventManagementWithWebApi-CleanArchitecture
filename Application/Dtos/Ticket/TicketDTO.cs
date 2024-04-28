@@ -15,22 +15,22 @@ namespace Application.Dtos.Ticket
         public double Price { get; set; }
         [Display(Name = "Start  Date of Event")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
         [Display(Name = "End  Date of Event")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+      //  [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "Please enter the Start Date of Event.")]
         [Display(Name = "Start  Date of Event")]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
+       // [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan StartTime { get; set; }
         [Required(ErrorMessage = "Please enter the End Time of Event.")]
         [Display(Name = "End Time  of Event")]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
+      //  [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan? EndTime { get; set; }
         public Guid EventId { get; set; }
         public string Location { get; set; }
