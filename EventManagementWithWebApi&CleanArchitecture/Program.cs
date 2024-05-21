@@ -32,6 +32,7 @@ using Newtonsoft.Json;
 using Microsoft.OpenApi.Any;
 using Application.Interfaces.TicketRepository;
 using Application.Services;
+using Microsoft.Extensions.FileProviders;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +48,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<EventlyDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("Evently"),
     builder => builder.MigrationsAssembly("Infra.Data")));
+
+/*builder.Services.AddDbContext<EventlyDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Evently"),
+        builder => builder.MigrationsAssembly("Infra.Data")),
+    //.Scoped);*/
+
+
 
 /*builder.Services.AddDbContext<AppIdentityDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));*/
@@ -137,6 +145,8 @@ builder.Services.AddSwaggerGen(option =>
         BearerFormat = "JWT",
         Scheme = "Bearer"
     });
+    option.OperationFilter<SwaggerFileUploadOperationFilter>();
+
     option.MapType<TimeSpan>(() => new OpenApiSchema
     {
         Type = "string",
@@ -212,6 +222,15 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+/*app.UseStaticFiles();
 
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+    RequestPath = "/Resources"
+});
+
+*/
 
 app.Run();

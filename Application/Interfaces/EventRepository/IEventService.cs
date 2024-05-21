@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.IBaseRepository;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,7 @@ namespace Application.Interfaces.EventRepository
         Task<List<Event>> GetEventsByCatagoryId(Guid categoryId);
         Task<IEnumerable<Event>> GetAllValidatedEvents();
         Task<IEnumerable<Event>> GetAllNoValidatedEvents();
+        Task<string> SaveImage(IFormFile photo);
+        
     }
 }

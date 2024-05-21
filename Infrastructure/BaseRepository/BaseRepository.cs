@@ -22,12 +22,15 @@ namespace Infra.Data.BaseRepository
             _context = context;
         }
 
-        public void Create(T entity)
+        public async Task<int> Create(T entity)
         {
-            _context.Set<T>().Add(entity);
+            _context.Set<T>().Update(entity);
+            return await _context.SaveChangesAsync();
+
+
         }
 
-       
+
         public Task<T> Get(Guid id)
         {
             return _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
@@ -38,14 +41,16 @@ namespace Infra.Data.BaseRepository
             return _context.Set<T>().ToListAsync();
         }
 
-        public async Task<bool> SaveChangesAsync()
+       public async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync().ConfigureAwait(false) > 0;
         }
 
-        public void Update(T entity)
+        public async Task<int> Update(T entity)
         {
             _context.Set<T>().Update(entity);
+            return await _context.SaveChangesAsync();
+            
 
         }
         

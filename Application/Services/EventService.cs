@@ -3,6 +3,7 @@ using Application.Interfaces.IBaseRepository;
 using Domain.Entities;
 using Infra.Data.BaseRepository;
 using Infrastructure.Context;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,7 @@ namespace Application.Services
         public async Task<Event> CreateEvent(Event e)
         {
 
-            _baseRepository.Create(e);
-            await _baseRepository.SaveChangesAsync();
+          await  _baseRepository.Create(e);
             return e;
         }
 
@@ -73,11 +73,50 @@ namespace Application.Services
                   .ToListAsync();
         }
 
+       
+
+        private string SanitizeFileName(string fileName)
+        {
+            var sanitizedFileName = fileName.Replace(" ", "_");
+
+            sanitizedFileName = string.Concat(sanitizedFileName.Split(Path.GetInvalidFileNameChars()));
+
+            return sanitizedFileName;
+        }
+
+
         public async Task<Event> UpdateEvent(Event e)
         {
-            _baseRepository.Update(e);
-            await _baseRepository.SaveChangesAsync(); // Assuming SaveChangesAsync is implemented to save changes asynchronously
+           await  _baseRepository.Update(e);
             return e;
+        }
+
+           async  Task<string> IEventService.SaveImage(IFormFile photo)
+        {
+            try
+            {
+                // Get the file name and sanitize it
+                var fileName = Path.GetFileName(photo.FileName);
+                var sanitizedFileName = SanitizeFileName(fileName);
+
+                //var basePath = @"D:\photoevent";
+                var basePath = @"D:\EventlyFrontend\eventlyfrontend\public\images\Affiche";
+                var filePath = Path.Combine(basePath, sanitizedFileName);
+
+                Directory.CreateDirectory(basePath);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
     }
 }

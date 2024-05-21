@@ -18,13 +18,13 @@ namespace Domain.Entities
             public string Ticketcolor { get; set; }
             public double Price { get; set; }
             [Display(Name = "Start  Date of Event")]
-            [DataType(DataType.Date)]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-            public DateTime StartDate { get; set; }
+
+        public DateTime StartDate { get; set; }
             [Display(Name = "End  Date of Event")]
-            [DataType(DataType.Date)]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-            public DateTime EndDate { get; set; }
+
+        public DateTime EndDate { get; set; }
 
             [Required(ErrorMessage = "Please enter the Start Date of Event.")]
             [Display(Name = "Start  Date of Event")]

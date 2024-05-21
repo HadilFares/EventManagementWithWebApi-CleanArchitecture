@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,14 +12,15 @@ namespace Application.Dtos.Event
     public class EventDTO
     {
 
+        public IFormFile? Photo {  get; set; }
         public string? OrganizerName { get; set; }
         public string? OrganizerLastName { get; set; }
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         [Required(ErrorMessage = "Please enter the Name of Event.")]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter the Description of Event.")]
-        [MaxLength(150)]
+        [MaxLength(500)]
         public string Description { get; set; }
       
         [Required(ErrorMessage = "Please enter the Start  Date of Event.")]
@@ -32,6 +34,7 @@ namespace Application.Dtos.Event
         [Display(Name = "End  Date of Event")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
         public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "Please enter the Start Date of Event.")]
@@ -52,7 +55,7 @@ namespace Application.Dtos.Event
         public double Price { get; set; }
         [Required(ErrorMessage = "Please enter the NbStand of Event.")]
         public int NbStand { get; set; }
-        public int Ratings { get; set; }
+        public int? Ratings { get; set; }
         [Required]
         public string OrganizerId { get; set; }
         [Required(ErrorMessage = "Please enter the category of Event.")]

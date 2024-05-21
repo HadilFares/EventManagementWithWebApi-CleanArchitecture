@@ -26,8 +26,7 @@ namespace Application.Services
 
         public  async Task<Comment> CreateComment(Comment comment)
         {
-            _baseRepository.Create(comment);
-            await _baseRepository.SaveChangesAsync();
+          await  _baseRepository.Create(comment);
             return comment;
         }
 
@@ -50,8 +49,7 @@ namespace Application.Services
 
         public async Task<Comment> UpdateComment(Comment comment)
         {
-            _baseRepository.Update(comment);
-            await _baseRepository.SaveChangesAsync(); // Assuming SaveChangesAsync is implemented to save changes asynchronously
+          await  _baseRepository.Update(comment);
             return comment;
         }
     }

@@ -75,7 +75,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Tickets
 
             };
 
-            _ticketservice.CreateTicket(ticket);
+         await   _ticketservice.CreateTicket(ticket);
    
 
             return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
@@ -95,27 +95,27 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Tickets
 
 
             // var Event = await _eventService.Get(ticketDTO.EventId);
+            var ticket=await _ticketservice.GetTicket(id);
 
 
 
-            var ticket = new Ticket
-            {
-                Name = ticketDTO.Name,
-                EventId = ticketDTO.EventId,
-                EndDate = ticketDTO.EndDate,
-                StartTime = ticketDTO.StartTime,
-                EndTime = ticketDTO.EndTime,
-                Location = ticketDTO.Location,
-                Price = ticketDTO.Price,
-                StartDate = ticketDTO.StartDate,
-                Ticketcolor = ticketDTO.TicketColor
 
-            };
+            ticket.Name = ticketDTO.Name;
+            ticket.EventId = ticketDTO.EventId;
+            ticket.EndDate = ticketDTO.EndDate;
+            ticket.StartTime = ticketDTO.StartTime;
+            ticket.EndTime = ticketDTO.EndTime;
+            ticket.Location = ticketDTO.Location;
+            ticket.Price = ticketDTO.Price;
+            ticket.StartDate = ticketDTO.StartDate;
+             ticket.Ticketcolor = ticketDTO.TicketColor;
 
-            _ticketservice.UpdateTicket(ticket);
+            
 
+            var tickett=await _ticketservice.UpdateTicket(ticket);
+            Console.WriteLine(tickett); 
+             return Ok(tickett);
 
-            return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
         }
 
 

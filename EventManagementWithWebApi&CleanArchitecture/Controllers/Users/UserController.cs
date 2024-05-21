@@ -26,6 +26,14 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Users
             _userService = userService;
         }
 
+
+        [HttpGet("userRole")]
+        public async Task<IActionResult> GetUserRoleCounts()
+        {
+            var result = await _userService.GetRoleCounts();
+            return Ok(result);
+        }
+
         [HttpPost("CreateUser")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateUser([FromBody] SignUp model)

@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
 {
@@ -16,24 +19,27 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
     [ApiController]
     public class EventController : ControllerBase
     {
+
+        private readonly ILogger<EventController> _logger;
         IEventService _eventRepository;
         ICategoryService _categoryService;
         private readonly UserManager<User> _userManager;
-        public EventController(UserManager<User> userManager,IEventService eventRepository,ICategoryService categoryService)
+        public EventController(UserManager<User> userManager,IEventService eventRepository,ICategoryService categoryService, ILogger<EventController> logger)
         {
             _eventRepository = eventRepository;
             _categoryService= categoryService;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("GetAllEvents")]
         //[Authorize(Roles = "Organizer")]
 
-        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllEvents()
+        public async Task<ActionResult<IEnumerable<EventAllDTO>>> GetAllEvents()
         {
             var events = await _eventRepository.GetAllEvents();
-            var eventsWithCategoryName = new List<EventDTO>();
+            var eventsWithCategoryName = new List<EventAllDTO>();
 
             foreach (var e in events)
             {
@@ -41,7 +47,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
                 var categoryName = await _categoryService.GetCategoryById(e.CategoryId.Value);
 
                 // Create the EventDTO and populate its properties
-                var eventDto = new EventDTO
+                var eventDto = new EventAllDTO
                 { 
                     
                     Id=e.Id,
@@ -56,7 +62,10 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
                     Price = e.Price,
                     NbStand = e.NbStand,
                     OrganizerId = e.UserId,
-                    CategoryName = categoryName, // Assign the retrieved category name
+                    CategoryName = categoryName,
+                    Photo=e.Photo
+
+                    // Assign the retrieved category name
                 };
 
                 // Add the EventDTO to the list
@@ -153,7 +162,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvent(Guid id, [FromBody] EventDTO eventDto)
+        public async Task<IActionResult> UpdateEvent(Guid id, [FromForm] EventDTO eventDto)
         {
 
             var existingEvent = await _eventRepository.GetEvent(id);
@@ -162,7 +171,15 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
                 return NotFound();
             }
             var newcategoryid = await _categoryService.GetCategoryByName(eventDto.CategoryName);
-
+            string savedImagePath = null;
+            if (eventDto.Photo != null && eventDto.Photo.Length > 0)
+            {
+                savedImagePath = await _eventRepository.SaveImage(eventDto.Photo);
+                if (savedImagePath == null)
+                {
+                    return BadRequest("Invalid image file.");
+                }
+            }
             existingEvent.Name = eventDto.Name;
             existingEvent.Description = eventDto.Description;
             existingEvent.Type = eventDto.Type;
@@ -174,18 +191,20 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             existingEvent.EndTime = eventDto.EndTime;
             existingEvent.Location = eventDto.Location;
             existingEvent.NbStand = eventDto.NbStand;
+            existingEvent.Photo = savedImagePath;
             existingEvent.IsValidated = false;
 
 
-            _eventRepository.UpdateEvent(existingEvent);
+          await   _eventRepository.UpdateEvent(existingEvent);
+
          
 
-            return NoContent();
+            return Ok(existingEvent);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEvent([FromBody] EventDTO eventDto)
+        public async Task<IActionResult> CreateEvent([FromForm] EventDTO eventDto)
         {
 
             if (!ModelState.IsValid)
@@ -194,6 +213,17 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             }
 
             var categoryId = await _categoryService.GetCategoryByName(eventDto.CategoryName);
+
+            string savedImagePath = null;
+            if (eventDto.Photo != null && eventDto.Photo.Length > 0)
+            {
+                savedImagePath =  await _eventRepository.SaveImage(eventDto.Photo);
+                if (savedImagePath == null)
+                {
+                    return BadRequest("Invalid image file.");
+                }
+            }
+
             var NewEvent = new Event
         {
             Name = eventDto.Name,
@@ -208,15 +238,17 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
             EndTime = eventDto.EndTime,
             Location = eventDto.Location,
             NbStand =eventDto.NbStand,
-       
-    };
+            Photo= savedImagePath
 
-    _eventRepository.CreateEvent(NewEvent);
+            };
+
+   await  _eventRepository.CreateEvent(NewEvent);
 
       return CreatedAtAction(nameof(GetEventById), new { id = NewEvent.Id }, NewEvent);
 
 
     }
+        
 
 
         [HttpGet("GetEventsByOrganizerId/{OrganizerId}")]
@@ -242,6 +274,86 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Events
 
             return Ok(events);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> FilterEvents ([FromQuery] EventFilter searchFilter)
+        {
+            var events = await _eventRepository.GetAllEvents();
+            var categoryId = await _categoryService.GetCategoryByName(searchFilter.CategoryName);
+
+            if (!string.IsNullOrEmpty(searchFilter.CategoryName))
+            {
+                events = (List<Event>)events.Where(e => e.CategoryId==categoryId);
+            }
+
+            if (!string.IsNullOrEmpty(searchFilter.Location))
+            {
+                events = (List<Event>)events.Where(e => e.Location == searchFilter.Location);
+            }
+
+            return Ok(events);
+        }
+
+
+        /* [HttpPost("save-image")]
+         public async Task<IActionResult> SaveImage(IFormFile photo)
+         {
+             if (photo == null || photo.Length == 0)
+             {
+                 return BadRequest("No file was provided.");
+             }
+
+             var fileName = Path.GetFileName(photo.FileName);
+             var basePath = @"D:\photoevent";
+             var filePath = Path.Combine(basePath, fileName);
+
+             using (var stream = new FileStream(filePath, FileMode.Create))
+             {
+                 await photo.CopyToAsync(stream);
+             }
+
+
+             return Ok(new { message = "Image saved successfully." });
+         }
+        */
+        /*[HttpPost("save-image")]
+        public async Task<string> SaveImage(IFormFile photo)
+        {
+            if (photo == null || photo.Length == 0)
+            {
+                return BadRequest("No file was provided.");
+            }
+
+            // Get the file name and sanitize it
+            var fileName = Path.GetFileName(photo.FileName);
+            var sanitizedFileName = SanitizeFileName(fileName);
+
+            var basePath = @"D:\photoevent";
+            var filePath = Path.Combine(basePath, sanitizedFileName);
+
+            // Ensure the directory exists
+            Directory.CreateDirectory(basePath);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await photo.CopyToAsync(stream);
+            }
+
+            return Ok(new { message = "Image saved successfully." });
+        }
+
+
+        private string SanitizeFileName(string fileName)
+        {
+            // Replace spaces with underscores
+            var sanitizedFileName = fileName.Replace(" ", "_");
+
+            // Further sanitize by removing any invalid characters
+            sanitizedFileName = string.Concat(sanitizedFileName.Split(Path.GetInvalidFileNameChars()));
+
+            return sanitizedFileName;
+        }*/
+
     }
 }
 

@@ -27,8 +27,7 @@ namespace Application.Services
 
         public async  Task<Category> CreateCategory(Category category)
         {
-            _baseRepository.Create(category);
-            await _baseRepository.SaveChangesAsync();
+          await  _baseRepository.Create(category);
             return category;
         }
 
@@ -91,8 +90,7 @@ namespace Application.Services
 
         public async Task<Category> UpdateCategory(Category category)
         {
-            _baseRepository.Update(category);
-            await _baseRepository.SaveChangesAsync(); // Assuming SaveChangesAsync is implemented to save changes asynchronously
+          await  _baseRepository.Update(category);
             return category;
         }
     

@@ -62,7 +62,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
                 OrganizerId = categoryDto.UserId
             };
 
-            _categoryRepository.CreateCategory(category);
+         await    _categoryRepository.CreateCategory(category);
 
             return CreatedAtAction(nameof(GetCatagoryById), new { id = category.Id }, category);
         }
@@ -114,7 +114,7 @@ namespace EventManagementWithWebApi_CleanArchitecture.Controllers.Categories
             existingCategory.Name = categoryDto.Name;
            
 
-            _categoryRepository.UpdateCategory(existingCategory);
+           await _categoryRepository.UpdateCategory(existingCategory);
        
 
             return NoContent();

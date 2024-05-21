@@ -1,5 +1,6 @@
 ﻿using Application.Dtos.Accounts;
 using Application.Dtos.Email;
+using Application.Dtos.Statistics;
 using Application.Interfaces.Authentification;
 using Application.Interfaces.Email;
 using Application.Interfaces.IBaseRepository;
@@ -8,6 +9,7 @@ using Domain.Entities;
 using Infrastructure.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -25,11 +27,12 @@ namespace Application.Services
         private readonly EventlyDbContext _eventlyDbContext;
         private readonly IEmailService _emailService;
         private readonly IAccount _account;
-        public UserService(UserManager<User> userManager, IEmailService emailService, EventlyDbContext eventlyDbContext)
+        public UserService(UserManager<User> userManager, IEmailService emailService, EventlyDbContext eventlyDbContext, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _eventlyDbContext = eventlyDbContext;
             _emailService = emailService;
+            _roleManager = roleManager;
 
 
         }
@@ -110,7 +113,19 @@ namespace Application.Services
             return auth;
         }
 
+        public async Task<List<UserRole>> GetRoleCounts()
+        {
+            var roles = await _roleManager.Roles.ToListAsync();
+                var roleCounts = new List<UserRole>();
 
+            foreach (var role in roles)
+            {
+                var userIds = await _userManager.GetUsersInRoleAsync(role.Name);
+                roleCounts.Add(new UserRole { RoleName = role.Name, UserCount = userIds.Count });
+            }
+
+            return roleCounts;
+        }
 
         public async Task<List<string>> GetUserRolesAsync(User user)
         {

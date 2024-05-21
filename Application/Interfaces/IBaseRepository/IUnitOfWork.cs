@@ -13,8 +13,8 @@ namespace Application.Interfaces.IBaseRepository
 {
     public interface IBaseRepository<T> where T : BaseEntity
     {
-        void Create(T entity);
-        void Update(T entity);
+        Task<int> Create(T entity);
+        Task<int> Update(T entity);
         Task<bool> Delete(Guid id);
         Task<T> Get(Guid id);
         Task<T> Get(string id);

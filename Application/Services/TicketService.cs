@@ -25,8 +25,7 @@ namespace Application.Services
 
         public async Task<Ticket> CreateTicket(Ticket ticket)
         {
-            _baseRepository.Create(ticket);
-            await _baseRepository.SaveChangesAsync(); 
+            await  _baseRepository.Create(ticket);
             return ticket;
         }
 
@@ -49,8 +48,8 @@ namespace Application.Services
 
         public async Task<Ticket> UpdateTicket(Ticket ticket)
         {
-             _baseRepository.Update(ticket);
-            await _baseRepository.SaveChangesAsync(); // Assuming SaveChangesAsync is implemented to save changes asynchronously
+             var x= await _baseRepository.Update(ticket);
+            Console.WriteLine(x);
             return ticket;
         }
     }
